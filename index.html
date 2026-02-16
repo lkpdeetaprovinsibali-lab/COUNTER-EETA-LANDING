@@ -63,9 +63,93 @@
             margin-bottom: 1.5rem;
         }
 
+        /* State containers */
+        .state {
+            display: none;
+        }
+
+        .state.active {
+            display: block;
+        }
+
+        /* Loading state */
+        .loading-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            font-size: 1.125rem;
+            font-weight: 500;
+        }
+
+        .loading-subtext {
+            font-size: 0.875rem;
+            opacity: 0.8;
+        }
+
+        /* Success state (App Running) */
+        .success-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .check-icon {
+            width: 80px;
+            height: 80px;
+            background: #10b981;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            animation: scaleIn 0.5s ease-out;
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0); }
+            to { transform: scale(1); }
+        }
+
+        .success-message {
+            font-size: 1.5rem;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .countdown {
+            font-size: 3rem;
+            font-weight: bold;
+            margin: 1rem 0;
+        }
+
+        .redirect-message {
+            font-size: 1rem;
+            opacity: 0.9;
+            text-align: center;
+        }
+
+        /* Not running state */
         .hero-text {
             text-align: center;
-            margin-bottom: 2.5rem;
+            margin-bottom: 2rem;
         }
 
         .hero-text h2 {
@@ -137,6 +221,17 @@
             background: rgba(255, 255, 255, 0.3);
         }
 
+        .btn-refresh {
+            background: #10b981;
+            color: white;
+            font-size: 1rem;
+            padding: 0.875rem 1.5rem;
+        }
+
+        .btn-refresh:hover {
+            background: #059669;
+        }
+
         /* Section divider */
         .section-divider {
             display: flex;
@@ -159,41 +254,6 @@
             text-transform: uppercase;
             letter-spacing: 0.05em;
             opacity: 0.7;
-        }
-
-        /* Features */
-        .features {
-            display: grid;
-            gap: 1rem;
-            margin: 2rem 0;
-        }
-
-        .feature {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 1rem;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-        }
-
-        .feature-icon {
-            font-size: 1.5rem;
-            flex-shrink: 0;
-        }
-
-        .feature-text {
-            flex: 1;
-        }
-
-        .feature-title {
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-        }
-
-        .feature-desc {
-            font-size: 0.875rem;
-            opacity: 0.8;
         }
 
         /* Info boxes */
@@ -229,6 +289,41 @@
 
         .alert-box .info-title {
             color: #fbbf24;
+        }
+
+        /* Features */
+        .features {
+            display: grid;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+        }
+
+        .feature-icon {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .feature-text {
+            flex: 1;
+        }
+
+        .feature-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .feature-desc {
+            font-size: 0.875rem;
+            opacity: 0.8;
         }
 
         /* Steps */
@@ -359,140 +454,179 @@
         <p class="subtitle">Uji Prosedur Analitis Otomatis</p>
 
         <div class="card">
-            <div class="hero-text">
-                <h2>🚀 Mulai Analisis Laporan Keuangan</h2>
-                <p>
-                    Klik tombol di bawah untuk membuka aplikasi COUNTER EETA.<br>
-                    Aplikasi akan otomatis terbuka di browser Anda.
+            <!-- Loading State -->
+            <div class="state active" id="loadingState">
+                <div class="loading-content">
+                    <div class="spinner"></div>
+                    <p class="loading-text">Memeriksa aplikasi...</p>
+                    <p class="loading-subtext">Mohon tunggu sebentar</p>
+                </div>
+            </div>
+
+            <!-- Success State (App Running - Auto Redirect) -->
+            <div class="state" id="successState">
+                <div class="success-content">
+                    <div class="check-icon">✓</div>
+                    <div class="success-message">Aplikasi Terdeteksi!</div>
+                    <div class="countdown" id="countdown">3</div>
+                    <div class="redirect-message">Mengarahkan ke aplikasi...</div>
+                    <button class="btn btn-secondary" onclick="redirectNow()">
+                        Buka Sekarang
+                    </button>
+                </div>
+            </div>
+
+            <!-- Not Running State (Main Content) -->
+            <div class="state" id="notRunningState">
+                <div class="hero-text">
+                    <h2>🚀 Mulai Analisis Laporan Keuangan</h2>
+                    <p>
+                        Aplikasi belum berjalan. Klik tombol di bawah untuk membuka aplikasi COUNTER EETA secara otomatis.
+                    </p>
+                </div>
+
+                <!-- Launch Button (Custom Protocol) -->
+                <a href="counter-eeta://launch" class="btn btn-launch" id="launchBtn">
+                    🚀 Buka Aplikasi
+                </a>
+
+                <!-- Info after launch -->
+                <div class="info-box" style="background: rgba(16, 185, 129, 0.2); border-color: rgba(16, 185, 129, 0.4);">
+                    <div class="info-title">
+                        💡 Setelah Klik Tombol:
+                    </div>
+                    <div class="info-text">
+                        • Browser akan meminta konfirmasi - klik <strong>"Open"</strong> atau <strong>"Buka"</strong><br>
+                        • Aplikasi akan terbuka otomatis dalam beberapa detik<br>
+                        • Halaman ini akan otomatis refresh dan redirect ke aplikasi
+                    </div>
+                </div>
+
+                <!-- Refresh Button -->
+                <button class="btn btn-refresh" onclick="reloadPage()">
+                    🔄 Coba Lagi / Refresh
+                </button>
+
+                <!-- Section Divider -->
+                <div class="section-divider">
+                    <span class="section-divider-text">Belum Punya Aplikasinya?</span>
+                </div>
+
+                <!-- Download Section -->
+                <div style="text-align: center; margin: 2rem 0 1.5rem;">
+                    <p style="opacity: 0.9; margin-bottom: 1.5rem;">
+                        Download COUNTER EETA untuk mulai menganalisis laporan keuangan secara otomatis.
+                    </p>
+                </div>
+
+                <div class="features">
+                    <div class="feature">
+                        <span class="feature-icon">⚡</span>
+                        <div class="feature-text">
+                            <div class="feature-title">Analisis Otomatis & Cepat</div>
+                            <div class="feature-desc">Hitung rasio keuangan dalam hitungan detik</div>
+                        </div>
+                    </div>
+                    <div class="feature">
+                        <span class="feature-icon">📊</span>
+                        <div class="feature-text">
+                            <div class="feature-title">Export Excel & PDF</div>
+                            <div class="feature-desc">Hasil analisis siap untuk laporan</div>
+                        </div>
+                    </div>
+                    <div class="feature">
+                        <span class="feature-icon">🔒</span>
+                        <div class="feature-text">
+                            <div class="feature-title">Data Lokal & Aman</div>
+                            <div class="feature-desc">Semua data diproses di komputer Anda</div>
+                        </div>
+                    </div>
+                    <div class="feature">
+                        <span class="feature-icon">💻</span>
+                        <div class="feature-text">
+                            <div class="feature-title">Tidak Perlu Internet</div>
+                            <div class="feature-desc">Bekerja offline setelah download</div>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="https://your-download-link.com/UjiPAAnalyzer.exe" class="btn btn-download" id="downloadBtn">
+                    📥 Download Aplikasi (Gratis)
+                </a>
+
+                <p class="system-req">
+                    <strong>Ukuran:</strong> ~50MB | 
+                    <strong>Sistem:</strong> Windows 10/11 | 
+                    <strong>Gratis</strong> - Tanpa biaya apapun
                 </p>
-            </div>
 
-            <!-- Launch Button -->
-            <a href="counter-eeta://launch" class="btn btn-launch" id="launchBtn">
-                🚀 Buka Aplikasi
-            </a>
-
-            <!-- Info after launch -->
-            <div class="info-box" style="background: rgba(16, 185, 129, 0.2); border-color: rgba(16, 185, 129, 0.4);">
-                <div class="info-title">
-                    💡 Setelah Klik Tombol:
-                </div>
-                <div class="info-text">
-                    • Browser akan meminta konfirmasi - klik <strong>"Open"</strong> atau <strong>"Buka"</strong><br>
-                    • Aplikasi akan terbuka otomatis dalam beberapa detik<br>
-                    • Tunggu hingga interface aplikasi muncul di browser
-                </div>
-            </div>
-
-            <!-- Section Divider -->
-            <div class="section-divider">
-                <span class="section-divider-text">Belum Punya Aplikasinya?</span>
-            </div>
-
-            <!-- Download Section -->
-            <div style="text-align: center; margin: 2rem 0 1.5rem;">
-                <p style="opacity: 0.9; margin-bottom: 1.5rem;">
-                    Download COUNTER EETA untuk mulai menganalisis laporan keuangan secara otomatis.
-                </p>
-            </div>
-
-            <div class="features">
-                <div class="feature">
-                    <span class="feature-icon">⚡</span>
-                    <div class="feature-text">
-                        <div class="feature-title">Analisis Otomatis & Cepat</div>
-                        <div class="feature-desc">Hitung rasio keuangan dalam hitungan detik</div>
+                <!-- Troubleshooting Section -->
+                <div class="troubleshooting">
+                    <div class="troubleshooting-toggle" onclick="toggleTroubleshooting()">
+                        <span class="troubleshooting-toggle-text">
+                            ❓ Tombol "Buka Aplikasi" Tidak Bekerja?
+                        </span>
+                        <span class="troubleshooting-arrow" id="troubleshootingArrow">▼</span>
                     </div>
-                </div>
-                <div class="feature">
-                    <span class="feature-icon">📊</span>
-                    <div class="feature-text">
-                        <div class="feature-title">Export Excel & PDF</div>
-                        <div class="feature-desc">Hasil analisis siap untuk laporan</div>
-                    </div>
-                </div>
-                <div class="feature">
-                    <span class="feature-icon">🔒</span>
-                    <div class="feature-text">
-                        <div class="feature-title">Data Lokal & Aman</div>
-                        <div class="feature-desc">Semua data diproses di komputer Anda</div>
-                    </div>
-                </div>
-                <div class="feature">
-                    <span class="feature-icon">💻</span>
-                    <div class="feature-text">
-                        <div class="feature-title">Tidak Perlu Internet</div>
-                        <div class="feature-desc">Bekerja offline setelah download</div>
-                    </div>
-                </div>
-            </div>
-
-            <a href="https://your-download-link.com/UjiPAAnalyzer.exe" class="btn btn-download" id="downloadBtn">
-                📥 Download Aplikasi (Gratis)
-            </a>
-
-            <p class="system-req">
-                <strong>Ukuran:</strong> ~50MB | 
-                <strong>Sistem:</strong> Windows 10/11 | 
-                <strong>Gratis</strong> - Tanpa biaya apapun
-            </p>
-
-            <!-- Troubleshooting Section -->
-            <div class="troubleshooting">
-                <div class="troubleshooting-toggle" onclick="toggleTroubleshooting()">
-                    <span class="troubleshooting-toggle-text">
-                        ❓ Tombol "Buka Aplikasi" Tidak Bekerja?
-                    </span>
-                    <span class="troubleshooting-arrow" id="troubleshootingArrow">▼</span>
-                </div>
-                <div class="troubleshooting-content" id="troubleshootingContent">
-                    <div class="alert-box" style="margin-top: 1rem;">
-                        <div class="info-title">
-                            🔧 Cara Manual Membuka Aplikasi:
+                    <div class="troubleshooting-content" id="troubleshootingContent">
+                        <div class="alert-box" style="margin-top: 1rem;">
+                            <div class="info-title">
+                                🔧 Cara Manual Membuka Aplikasi:
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="steps">
-                        <div class="step">
-                            <div class="step-number">1</div>
-                            <div class="step-content">
-                                <div class="step-title">Cari File "UjiPAAnalyzer.exe"</div>
-                                <div class="step-desc">
-                                    Biasanya ada di folder Downloads atau Desktop Anda
+                        <div class="steps">
+                            <div class="step">
+                                <div class="step-number">1</div>
+                                <div class="step-content">
+                                    <div class="step-title">Cari File "UjiPAAnalyzer.exe"</div>
+                                    <div class="step-desc">
+                                        Biasanya ada di folder Downloads atau Desktop Anda
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="step">
+                                <div class="step-number">2</div>
+                                <div class="step-content">
+                                    <div class="step-title">Double-Click File .exe</div>
+                                    <div class="step-desc">
+                                        Klik 2x pada file untuk menjalankan aplikasi
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="step">
+                                <div class="step-number">3</div>
+                                <div class="step-content">
+                                    <div class="step-title">Tunggu Browser Terbuka</div>
+                                    <div class="step-desc">
+                                        Aplikasi akan otomatis membuka browser dalam 3-5 detik
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="step">
+                                <div class="step-number">4</div>
+                                <div class="step-content">
+                                    <div class="step-title">Klik "Coba Lagi" di Atas</div>
+                                    <div class="step-desc">
+                                        Setelah aplikasi terbuka, klik tombol refresh untuk auto-redirect
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="step">
-                            <div class="step-number">2</div>
-                            <div class="step-content">
-                                <div class="step-title">Double-Click File .exe</div>
-                                <div class="step-desc">
-                                    Klik 2x pada file untuk menjalankan aplikasi
-                                </div>
+                        <div class="info-box">
+                            <div class="info-title">
+                                💡 Kenapa Tombol Tidak Bekerja?
                             </div>
-                        </div>
-
-                        <div class="step">
-                            <div class="step-number">3</div>
-                            <div class="step-content">
-                                <div class="step-title">Tunggu Browser Terbuka</div>
-                                <div class="step-desc">
-                                    Aplikasi akan otomatis membuka browser dalam 3-5 detik
-                                </div>
+                            <div class="info-text">
+                                Tombol otomatis hanya bekerja setelah Anda menjalankan aplikasi minimal <strong>1 kali secara manual</strong>.
+                                Ini karena aplikasi perlu mendaftarkan dirinya ke sistem Windows terlebih dahulu.
+                                <br><br>
+                                Setelah dijalankan 1x manual, tombol "Buka Aplikasi" akan berfungsi untuk seterusnya! 🎉
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="info-box">
-                        <div class="info-title">
-                            💡 Kenapa Tombol Tidak Bekerja?
-                        </div>
-                        <div class="info-text">
-                            Tombol otomatis hanya bekerja setelah Anda menjalankan aplikasi minimal <strong>1 kali secara manual</strong>.
-                            Ini karena aplikasi perlu mendaftarkan dirinya ke sistem Windows terlebih dahulu.
-                            <br><br>
-                            Setelah dijalankan 1x manual, tombol "Buka Aplikasi" akan berfungsi untuk seterusnya! 🎉
                         </div>
                     </div>
                 </div>
@@ -500,33 +634,36 @@
         </div>
 
         <!-- How it Works Card -->
-        <div class="card">
+        <div class="card" id="howItWorksCard" style="display: none;">
             <h2 style="margin-bottom: 1.5rem; text-align: center;">🤔 Bagaimana Cara Kerjanya?</h2>
 
             <div class="info-box">
                 <div class="info-title">
-                    🔗 Custom URL Protocol
+                    🔄 Sistem Auto-Check + Auto-Launch
                 </div>
                 <div class="info-text">
-                    Tombol "Buka Aplikasi" menggunakan custom URL protocol (<code>counter-eeta://</code>) 
-                    yang terdaftar di sistem Windows Anda - sama seperti aplikasi lain:
+                    Halaman ini menggunakan 2 teknologi canggih:
                     <br><br>
-                    • <strong>Zoom</strong> menggunakan <code>zoom://</code><br>
-                    • <strong>Telegram</strong> menggunakan <code>tg://</code><br>
-                    • <strong>uTorrent</strong> menggunakan <code>magnet://</code><br>
-                    • <strong>Counter EETA</strong> menggunakan <code>counter-eeta://</code>
+                    <strong>1. Heartbeat Detection:</strong><br>
+                    Secara otomatis mengecek apakah aplikasi sedang berjalan di komputer Anda.
+                    Jika sudah berjalan → langsung redirect otomatis!
+                    <br><br>
+                    <strong>2. Custom URL Protocol:</strong><br>
+                    Tombol "Buka Aplikasi" menggunakan protocol <code>counter-eeta://</code> 
+                    yang terdaftar di Windows - sama seperti Zoom, Telegram, atau uTorrent.
+                    Klik tombol → aplikasi langsung buka otomatis!
                 </div>
             </div>
 
             <div class="steps">
-                <h3>📱 Alur Kerja Aplikasi:</h3>
+                <h3>📱 Alur Kerja Lengkap:</h3>
 
                 <div class="step">
                     <div class="step-number">1</div>
                     <div class="step-content">
-                        <div class="step-title">Registrasi Otomatis</div>
+                        <div class="step-title">Buka Website Ini</div>
                         <div class="step-desc">
-                            Saat pertama kali dibuka, aplikasi mendaftarkan protocol <code>counter-eeta://</code> ke Windows
+                            Halaman otomatis cek: apakah aplikasi sudah running?
                         </div>
                     </div>
                 </div>
@@ -534,9 +671,9 @@
                 <div class="step">
                     <div class="step-number">2</div>
                     <div class="step-content">
-                        <div class="step-title">Klik Tombol "Buka Aplikasi"</div>
+                        <div class="step-title">Jika Sudah Running</div>
                         <div class="step-desc">
-                            Windows mengenali protocol dan otomatis menjalankan UjiPAAnalyzer.exe
+                            Auto-redirect dalam 3 detik ke aplikasi (localhost:5000)
                         </div>
                     </div>
                 </div>
@@ -544,9 +681,9 @@
                 <div class="step">
                     <div class="step-number">3</div>
                     <div class="step-content">
-                        <div class="step-title">Aplikasi Berjalan</div>
+                        <div class="step-title">Jika Belum Running</div>
                         <div class="step-desc">
-                            Aplikasi start di background dan membuka interface di browser (localhost:5000)
+                            Klik tombol "Buka Aplikasi" → aplikasi otomatis start
                         </div>
                     </div>
                 </div>
@@ -554,9 +691,9 @@
                 <div class="step">
                     <div class="step-number">4</div>
                     <div class="step-content">
-                        <div class="step-title">Mulai Analisis!</div>
+                        <div class="step-title">Refresh / Tunggu</div>
                         <div class="step-desc">
-                            Upload file Excel, lakukan analisis, dan export hasilnya
+                            Halaman akan auto-refresh setelah app start, atau klik "Coba Lagi"
                         </div>
                     </div>
                 </div>
@@ -570,6 +707,7 @@
                     • Semua data diproses lokal di komputer Anda<br>
                     • Tidak ada data yang dikirim ke server eksternal<br>
                     • Aplikasi hanya berjalan saat Anda gunakan<br>
+                    • Auto-shutdown 30 detik setelah browser ditutup<br>
                     • Source code transparan dan dapat diverifikasi
                 </div>
             </div>
@@ -577,6 +715,83 @@
     </div>
 
     <script>
+        const APP_URL = 'http://127.0.0.1:5000';
+        const CHECK_TIMEOUT = 3000;
+        const REDIRECT_DELAY = 3;
+
+        let countdownInterval;
+        let countdownValue = REDIRECT_DELAY;
+
+        async function checkAppRunning() {
+            try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), CHECK_TIMEOUT);
+                
+                const response = await fetch(APP_URL, {
+                    method: 'GET',
+                    signal: controller.signal,
+                    mode: 'no-cors'
+                });
+                
+                clearTimeout(timeoutId);
+                return true;
+                
+            } catch (error) {
+                console.log('App not detected:', error.message);
+                return false;
+            }
+        }
+
+        function showState(stateId) {
+            // Hide all states
+            document.querySelectorAll('.state').forEach(state => {
+                state.classList.remove('active');
+            });
+            
+            // Show selected state
+            document.getElementById(stateId).classList.add('active');
+        }
+
+        function showSuccess() {
+            showState('successState');
+            document.getElementById('howItWorksCard').style.display = 'block';
+            startCountdown();
+        }
+
+        function showNotRunning() {
+            showState('notRunningState');
+            document.getElementById('howItWorksCard').style.display = 'block';
+        }
+
+        function startCountdown() {
+            const countdownElement = document.getElementById('countdown');
+            
+            countdownInterval = setInterval(() => {
+                countdownValue--;
+                countdownElement.textContent = countdownValue;
+                
+                if (countdownValue <= 0) {
+                    clearInterval(countdownInterval);
+                    redirectToApp();
+                }
+            }, 1000);
+        }
+
+        function redirectNow() {
+            if (countdownInterval) {
+                clearInterval(countdownInterval);
+            }
+            redirectToApp();
+        }
+
+        function redirectToApp() {
+            window.location.href = APP_URL;
+        }
+
+        function reloadPage() {
+            window.location.reload();
+        }
+
         function toggleTroubleshooting() {
             const content = document.getElementById('troubleshootingContent');
             const arrow = document.getElementById('troubleshootingArrow');
@@ -585,34 +800,38 @@
             arrow.classList.toggle('open');
         }
 
-        // Optional: Track download
-        document.getElementById('downloadBtn')?.addEventListener('click', () => {
-            console.log('Download started');
-            // You can add analytics here if needed
+        async function init() {
+            console.log('🔍 Checking if app is running...');
+            
+            const isRunning = await checkAppRunning();
+            
+            if (isRunning) {
+                console.log('✅ App detected! Redirecting in 3 seconds...');
+                showSuccess();
+            } else {
+                console.log('⚠️  App not running. Showing launch options.');
+                showNotRunning();
+            }
+        }
+
+        // Track launch button click
+        document.addEventListener('DOMContentLoaded', () => {
+            const launchBtn = document.getElementById('launchBtn');
+            if (launchBtn) {
+                launchBtn.addEventListener('click', () => {
+                    console.log('🚀 Launch button clicked');
+                    
+                    // Auto-refresh after 5 seconds to check if app is now running
+                    setTimeout(() => {
+                        console.log('🔄 Auto-refreshing to check app status...');
+                        reloadPage();
+                    }, 5000);
+                });
+            }
         });
 
-        // Optional: Track launch attempt
-        document.getElementById('launchBtn')?.addEventListener('click', () => {
-            console.log('Launch button clicked');
-            
-            // Show a small message after click
-            setTimeout(() => {
-                const launched = confirm(
-                    'Apakah aplikasi sudah terbuka?\n\n' +
-                    'Jika tidak, silakan:\n' +
-                    '1. Buka file UjiPAAnalyzer.exe secara manual\n' +
-                    '2. Atau scroll ke bawah untuk lihat troubleshooting'
-                );
-                
-                if (!launched) {
-                    // Auto-scroll to troubleshooting
-                    document.querySelector('.troubleshooting').scrollIntoView({ 
-                        behavior: 'smooth' 
-                    });
-                    toggleTroubleshooting();
-                }
-            }, 2000);
-        });
+        // Start checking
+        init();
     </script>
 </body>
 </html>
