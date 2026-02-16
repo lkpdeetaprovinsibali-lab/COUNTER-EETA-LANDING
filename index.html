@@ -84,12 +84,12 @@
             to { transform: rotate(360deg); }
         }
 
-        /* App needs to be opened state */
-        .needs-open {
+        /* Main content state */
+        .main-content {
             display: none;
         }
 
-        .needs-open.active {
+        .main-content.active {
             display: block;
         }
 
@@ -118,7 +118,31 @@
             font-size: 1rem;
             line-height: 1.6;
             text-align: center;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Section divider */
+        .section-divider {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 2.5rem 0 1.5rem;
+        }
+
+        .section-divider::before,
+        .section-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .section-divider-text {
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            opacity: 0.7;
         }
 
         /* Step-by-step guide */
@@ -220,35 +244,6 @@
             text-align: center;
         }
 
-        /* Download state */
-        .download {
-            display: none;
-        }
-
-        .download.active {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1.5rem;
-        }
-
-        .download-icon {
-            width: 80px;
-            height: 80px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-        }
-
-        .download-message {
-            font-size: 1.25rem;
-            font-weight: 600;
-            text-align: center;
-        }
-
         /* Buttons */
         .btn {
             display: inline-flex;
@@ -295,6 +290,16 @@
             background: #059669;
         }
 
+        .btn-download {
+            background: #fbbf24;
+            color: #1e3a8a;
+            margin-bottom: 1rem;
+        }
+
+        .btn-download:hover {
+            background: #f59e0b;
+        }
+
         /* Info boxes */
         .info-box {
             background: rgba(59, 130, 246, 0.2);
@@ -321,7 +326,7 @@
         .features {
             display: grid;
             gap: 1rem;
-            margin-top: 1.5rem;
+            margin: 1.5rem 0;
         }
 
         .feature {
@@ -373,19 +378,31 @@
                 <p style="font-size: 0.875rem; opacity: 0.8;">Mohon tunggu sebentar</p>
             </div>
 
-            <!-- App Needs to be Opened State -->
-            <div class="needs-open" id="needsOpenState">
+            <!-- Success State (App Running) -->
+            <div class="success" id="successState">
+                <div class="check-icon">✓</div>
+                <div class="success-message">Aplikasi Terdeteksi!</div>
+                <div class="countdown" id="countdown">3</div>
+                <div class="redirect-message">Mengarahkan ke aplikasi...</div>
+                <button class="btn btn-secondary" onclick="redirectNow()">
+                    Buka Sekarang
+                </button>
+            </div>
+
+            <!-- Main Content (App Not Running) -->
+            <div class="main-content" id="mainContent">
                 <div class="alert-box">
                     <div class="alert-icon">⚠️</div>
-                    <div class="alert-title">Aplikasi Belum Dibuka</div>
+                    <div class="alert-title">Aplikasi Tidak Terdeteksi</div>
                     <div class="alert-text">
-                        Aplikasi COUNTER EETA sudah terinstall, tapi belum dijalankan.
-                        Silakan buka aplikasi terlebih dahulu!
+                        Aplikasi COUNTER EETA belum berjalan di komputer Anda.<br>
+                        Silakan ikuti langkah-langkah di bawah ini:
                     </div>
                 </div>
 
+                <!-- If Already Installed -->
                 <div class="steps">
-                    <h3>📋 Cara Membuka Aplikasi:</h3>
+                    <h3>📱 Sudah Punya Aplikasinya?</h3>
                     
                     <div class="step">
                         <div class="step-number">1</div>
@@ -402,7 +419,7 @@
                         <div class="step-content">
                             <div class="step-title">Double-Click File .exe</div>
                             <div class="step-desc">
-                                Klik 2x pada file UjiPAAnalyzer.exe untuk menjalankan
+                                Klik 2x pada file UjiPAAnalyzer.exe untuk menjalankan aplikasi
                             </div>
                         </div>
                     </div>
@@ -428,39 +445,22 @@
                     </div>
                 </div>
 
-                <div class="info-box">
-                    <div class="info-title">
-                        💡 Tips: Jangan Tutup Aplikasi Saat Digunakan
-                    </div>
-                    <div class="info-text">
-                        Aplikasi bekerja di background dan akan otomatis mati saat Anda tutup browser.
-                        Tidak perlu khawatir, aplikasi tidak akan makan banyak resource komputer.
-                    </div>
-                </div>
-
                 <button class="btn btn-refresh" onclick="reloadPage()">
                     🔄 Coba Lagi
                 </button>
-            </div>
 
-            <!-- Success State (App Running) -->
-            <div class="success" id="successState">
-                <div class="check-icon">✓</div>
-                <div class="success-message">Aplikasi Terdeteksi!</div>
-                <div class="countdown" id="countdown">3</div>
-                <div class="redirect-message">Mengarahkan ke aplikasi...</div>
-                <button class="btn btn-secondary" onclick="redirectNow()">
-                    Buka Sekarang
-                </button>
-            </div>
+                <!-- Section Divider -->
+                <div class="section-divider">
+                    <span class="section-divider-text">Atau</span>
+                </div>
 
-            <!-- Download State (App Not Installed) -->
-            <div class="download" id="downloadState">
-                <div class="download-icon">📥</div>
-                <div class="download-message">Aplikasi Belum Terinstall</div>
-                <p class="alert-text">
-                    Download COUNTER EETA untuk mulai menganalisis laporan keuangan secara otomatis.
-                </p>
+                <!-- If Not Installed Yet -->
+                <div style="text-align: center; margin: 2rem 0 1.5rem;">
+                    <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">📥 Belum Punya Aplikasinya?</h3>
+                    <p style="opacity: 0.9; margin-bottom: 1.5rem;">
+                        Download COUNTER EETA untuk mulai menganalisis laporan keuangan secara otomatis.
+                    </p>
+                </div>
                 
                 <div class="features">
                     <div class="feature">
@@ -481,7 +481,7 @@
                     </div>
                 </div>
 
-                <a href="https://your-download-link.com/UjiPAAnalyzer.exe" class="btn" id="downloadBtn">
+                <a href="https://your-download-link.com/UjiPAAnalyzer.exe" class="btn btn-download" id="downloadBtn">
                     📥 Download Aplikasi (Gratis)
                 </a>
                 
@@ -490,6 +490,18 @@
                     <strong>Sistem:</strong> Windows 10/11<br>
                     <strong>Gratis</strong> - Tanpa biaya apapun
                 </p>
+
+                <div class="info-box">
+                    <div class="info-title">
+                        💡 Tips: Setelah Download
+                    </div>
+                    <div class="info-text">
+                        1. Buka file yang sudah didownload (UjiPAAnalyzer.exe)<br>
+                        2. Double-click untuk menjalankan<br>
+                        3. Tunggu browser terbuka otomatis<br>
+                        4. Klik tombol "Coba Lagi" di atas untuk reload halaman ini
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -598,23 +610,17 @@
             }
         }
 
-        function showNeedsOpen() {
+        function showMainContent() {
             document.getElementById('loadingState').style.display = 'none';
-            document.getElementById('needsOpenState').classList.add('active');
+            document.getElementById('mainContent').classList.add('active');
             document.getElementById('howItWorksCard').style.display = 'block';
         }
 
         function showSuccess() {
             document.getElementById('loadingState').style.display = 'none';
-            document.getElementById('needsOpenState').classList.remove('active');
+            document.getElementById('mainContent').classList.remove('active');
             document.getElementById('successState').classList.add('active');
             startCountdown();
-        }
-
-        function showDownload() {
-            document.getElementById('loadingState').style.display = 'none';
-            document.getElementById('downloadState').classList.add('active');
-            document.getElementById('howItWorksCard').style.display = 'block';
         }
 
         function startCountdown() {
@@ -655,25 +661,10 @@
                 console.log('✓ App detected! Redirecting...');
                 showSuccess();
             } else {
-                console.log('✗ App not detected.');
-                // Try to determine if app is installed but not opened
-                // For now, we show "needs open" state assuming app is installed
-                // You can customize this logic
-                const isInstalled = localStorage.getItem('uji_pa_installed') === 'true';
-                
-                if (isInstalled) {
-                    showNeedsOpen();
-                } else {
-                    showDownload();
-                }
+                console.log('✗ App not running. Showing instructions.');
+                showMainContent();
             }
         }
-
-        // Track download
-        document.getElementById('downloadBtn')?.addEventListener('click', () => {
-            localStorage.setItem('uji_pa_installed', 'true');
-            console.log('Download started');
-        });
 
         // Start checking
         init();
