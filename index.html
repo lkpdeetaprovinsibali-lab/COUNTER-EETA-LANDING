@@ -832,6 +832,50 @@
 
         // Start checking
         init();
+
+        // ============================================================
+        // HEARTBEAT SYSTEM - Keep app alive when detected
+        // ============================================================
+        
+        let heartbeatInterval;
+        
+        function startHeartbeat() {
+            // Send heartbeat every 10 seconds
+            heartbeatInterval = setInterval(async () => {
+                try {
+                    await fetch('http://127.0.0.1:5000/heartbeat', {
+                        method: 'POST',
+                        mode: 'no-cors',  // Avoid CORS issues
+                        headers: { 'Content-Type': 'application/json' }
+                    });
+                    console.log('❤️ Heartbeat sent from landing page');
+                } catch (error) {
+                    // Silent fail - app might not be running
+                    console.debug('Heartbeat failed (app may not be running)');
+                }
+            }, 10000); // 10 seconds
+            
+            // Send initial heartbeat immediately
+            fetch('http://127.0.0.1:5000/heartbeat', {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' }
+            }).catch(() => {});
+        }
+        
+        function stopHeartbeat() {
+            if (heartbeatInterval) {
+                clearInterval(heartbeatInterval);
+                heartbeatInterval = null;
+            }
+        }
+        
+        // Start heartbeat if we're on this page
+        // (will keep app alive even if user stays on landing page)
+        startHeartbeat();
+        
+        // Stop heartbeat when leaving page
+        window.addEventListener('beforeunload', stopHeartbeat);
     </script>
 </body>
 </html>
