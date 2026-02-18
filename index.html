@@ -1,883 +1,961 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>COUNTER EETA - Landing</title>
+    <title>COUNTER EETA - Sistem Akuntansi Keuangan Daerah</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        /* ===== DESIGN TOKENS (mirroring provided CSS) ===== */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --color-primary:       #1e3a8a;
+            --color-primary-dark:  #1e40af;
+            --color-primary-light: #3b82f6;
+            --color-accent:        #d97706;
+            --color-accent-light:  #fbbf24;
+
+            --color-success: #059669;
+            --color-warning: #d97706;
+            --color-danger:  #dc2626;
+            --color-info:    #0891b2;
+
+            --color-bg:           #f8fafc;
+            --color-surface:      #ffffff;
+            --color-surface-alt:  #f1f5f9;
+            --color-border:       #e2e8f0;
+            --color-border-dark:  #cbd5e1;
+            --color-text:         #0f172a;
+            --color-text-secondary: #475569;
+            --color-text-muted:   #64748b;
+
+            --font-primary: 'Plus Jakarta Sans', 'Segoe UI', system-ui, sans-serif;
+            --font-mono:    'DM Mono', 'Courier New', monospace;
+
+            --spacing-xs:  0.25rem;
+            --spacing-sm:  0.5rem;
+            --spacing-md:  0.75rem;
+            --spacing-lg:  1rem;
+            --spacing-xl:  1.5rem;
+            --spacing-2xl: 2rem;
+            --spacing-3xl: 3rem;
+
+            --radius-sm: 0.25rem;
+            --radius-md: 0.375rem;
+            --radius-lg: 0.5rem;
+            --radius-xl: 0.75rem;
+
+            --shadow-xs: 0 1px 2px 0 rgba(0,0,0,.05);
+            --shadow-sm: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,.1), 0 2px 4px -1px rgba(0,0,0,.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,.1), 0 4px 6px -2px rgba(0,0,0,.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0,0,0,.1), 0 10px 10px -5px rgba(0,0,0,.04);
+
+            --transition-fast: 150ms ease;
+            --transition-base: 200ms ease;
+            --transition-slow: 300ms ease;
         }
+
+        [data-theme="dark"] {
+            --color-bg:             #0f172a;
+            --color-surface:        #1e293b;
+            --color-surface-alt:    #334155;
+            --color-border:         #475569;
+            --color-border-dark:    #334155;
+            --color-text:           #f1f5f9;
+            --color-text-secondary: #cbd5e1;
+            --color-text-muted:     #94a3b8;
+            --shadow-xs: 0 1px 2px 0 rgba(0,0,0,.3);
+            --shadow-sm: 0 1px 3px 0 rgba(0,0,0,.4), 0 1px 2px 0 rgba(0,0,0,.3);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,.4), 0 2px 4px -1px rgba(0,0,0,.3);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,.5), 0 4px 6px -2px rgba(0,0,0,.4);
+            --shadow-xl: 0 20px 25px -5px rgba(0,0,0,.6), 0 10px 10px -5px rgba(0,0,0,.5);
+        }
+
+        /* ===== BASE ===== */
+        html { scroll-behavior: smooth; }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            font-family: var(--font-primary);
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.6;
             min-height: 100vh;
-            color: white;
-            padding: 2rem 1rem;
+            -webkit-font-smoothing: antialiased;
         }
 
-        .container {
-            max-width: 700px;
-            margin: 0 auto;
+        /* ===== BACKGROUND (from provided CSS) ===== */
+        .bg-gradient {
+            position: fixed; inset: 0;
+            background:
+                radial-gradient(ellipse at top, rgba(30,58,138,.08), transparent 60%),
+                radial-gradient(ellipse at bottom right, rgba(217,119,6,.06), transparent 60%);
+            pointer-events: none; z-index: 0;
+        }
+        .bg-grid {
+            position: fixed; inset: 0;
+            background-image:
+                linear-gradient(rgba(30,58,138,.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(30,58,138,.02) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none; z-index: 1;
+        }
+        [data-theme="dark"] .bg-gradient {
+            background:
+                radial-gradient(ellipse at top, rgba(59,130,246,.15), transparent 60%),
+                radial-gradient(ellipse at bottom right, rgba(251,191,36,.1), transparent 60%);
+        }
+        [data-theme="dark"] .bg-grid {
+            background-image:
+                linear-gradient(rgba(148,163,184,.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(148,163,184,.03) 1px, transparent 1px);
         }
 
-        .logo {
-            width: 100px;
-            height: 100px;
-            background: white;
-            border-radius: 20px;
-            margin: 0 auto 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: #1e3a8a;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-        }
-
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-            text-align: center;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        .subtitle {
-            font-size: 1.125rem;
-            margin-bottom: 3rem;
-            opacity: 0.9;
-            text-align: center;
-        }
-
-        .card {
-            background: rgba(255, 255, 255, 0.15);
+        /* ===== HEADER (exact match to provided CSS) ===== */
+        .header {
+            position: sticky; top: 0; z-index: 100;
+            padding: var(--spacing-lg) 0;
+            background: var(--color-surface);
+            border-bottom: 2px solid var(--color-primary);
+            box-shadow: var(--shadow-sm);
             backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 2.5rem;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            margin-bottom: 1.5rem;
+        }
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo { display: flex; align-items: center; gap: var(--spacing-lg); }
+        .logo-icon {
+            width: 52px; height: 52px;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+            border-radius: var(--radius-md);
+            display: flex; align-items: center; justify-content: center;
+            color: white; box-shadow: var(--shadow-md);
+            font-size: 1.25rem; font-weight: 800;
+            font-family: var(--font-mono);
+            letter-spacing: -0.05em;
+        }
+        .logo-text { display: flex; flex-direction: column; line-height: 1.2; }
+        .logo-title {
+            font-size: 1.375rem; font-weight: 700;
+            color: var(--color-primary); letter-spacing: -0.025em;
+        }
+        [data-theme="dark"] .logo-title { color: var(--color-primary-light); }
+        .logo-subtitle { font-size: 0.8125rem; color: var(--color-text-secondary); font-weight: 500; }
+
+        .header-info { display: flex; align-items: center; gap: var(--spacing-md); }
+
+        .badge {
+            padding: 0.375rem 0.875rem;
+            background: var(--color-primary); color: white;
+            border-radius: var(--radius-md);
+            font-size: 0.75rem; font-weight: 600; letter-spacing: 0.025em;
+            box-shadow: var(--shadow-xs);
         }
 
-        /* State containers */
-        .state {
-            display: none;
+        .theme-toggle {
+            width: 40px; height: 40px;
+            border: 1px solid var(--color-border);
+            background: var(--color-surface);
+            border-radius: var(--radius-md);
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: all var(--transition-base);
+            font-size: 1.1rem;
+        }
+        .theme-toggle:hover {
+            background: var(--color-surface-alt);
+            border-color: var(--color-primary);
         }
 
-        .state.active {
+        /* ===== CONTAINER ===== */
+        .container { max-width: 780px; margin: 0 auto; padding: 0 var(--spacing-xl); }
+        .container-wide { max-width: 1100px; margin: 0 auto; padding: 0 var(--spacing-xl); }
+
+        /* ===== MAIN ===== */
+        .main-content { position: relative; z-index: 2; padding: var(--spacing-3xl) 0 var(--spacing-2xl); }
+
+        /* ===== STATES ===== */
+        .state { display: none; }
+        .state.active { display: block; }
+
+        /* ===== CARD ===== */
+        .card {
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-3xl);
+            box-shadow: var(--shadow-lg);
+            animation: fadeInUp 0.5s ease-out both;
+        }
+
+        /* ===== LOADING STATE ===== */
+        #loadingState .card-inner {
+            display: flex; flex-direction: column;
+            align-items: center; gap: var(--spacing-xl);
+            padding: var(--spacing-2xl) 0;
+            text-align: center;
+        }
+        .loading-spinner {
+            width: 52px; height: 52px;
+            border: 3px solid var(--color-border);
+            border-top-color: var(--color-primary);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        .loading-label {
+            font-size: 1rem; font-weight: 600; color: var(--color-text);
+        }
+        .loading-sub {
+            font-size: 0.875rem; color: var(--color-text-muted); margin-top: -var(--spacing-sm);
+        }
+
+        /* ===== SUCCESS STATE ===== */
+        #successState .card-inner {
+            display: flex; flex-direction: column;
+            align-items: center; gap: var(--spacing-xl);
+            padding: var(--spacing-2xl) 0;
+            text-align: center;
+        }
+        .check-ring {
+            width: 80px; height: 80px;
+            background: rgba(5,150,105,.1);
+            border: 2px solid var(--color-success);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2rem;
+            animation: scaleIn 0.4s cubic-bezier(.34,1.56,.64,1) both;
+        }
+        .success-label {
+            font-size: 1.375rem; font-weight: 700; color: var(--color-text);
+        }
+        .countdown-ring {
+            position: relative;
+            width: 72px; height: 72px;
+        }
+        .countdown-num {
+            position: absolute; inset: 0;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2rem; font-weight: 700;
+            font-family: var(--font-mono);
+            color: var(--color-primary);
+        }
+        .countdown-svg { transform: rotate(-90deg); }
+        .countdown-track { fill: none; stroke: var(--color-border); stroke-width: 4; }
+        .countdown-arc  { fill: none; stroke: var(--color-primary); stroke-width: 4; stroke-linecap: round; stroke-dasharray: 201; stroke-dashoffset: 0; transition: stroke-dashoffset 1s linear; }
+        .redirect-sub { font-size: 0.9rem; color: var(--color-text-muted); }
+
+        /* ===== MAIN STATE (not running) ===== */
+
+        /* Section heading */
+        .section-eyebrow {
+            display: inline-flex; align-items: center; gap: var(--spacing-sm);
+            font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em;
+            text-transform: uppercase; color: var(--color-primary);
+            background: rgba(30,58,138,.07);
+            border: 1px solid rgba(30,58,138,.15);
+            border-radius: var(--radius-md);
+            padding: 0.25rem 0.75rem;
+            margin-bottom: var(--spacing-lg);
+        }
+        [data-theme="dark"] .section-eyebrow {
+            background: rgba(59,130,246,.12);
+            border-color: rgba(59,130,246,.25);
+            color: var(--color-primary-light);
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: var(--spacing-3xl);
+            animation: fadeInUp 0.5s ease-out both;
+        }
+        .hero-title {
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
+            font-weight: 800; line-height: 1.15;
+            letter-spacing: -0.03em;
+            margin-bottom: var(--spacing-lg);
+        }
+        .title-main { display: block; color: var(--color-text); }
+        .title-accent {
+            display: block;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero-desc {
+            font-size: 0.9375rem; color: var(--color-text-secondary);
+            max-width: 520px; margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        /* Status bar */
+        .status-bar {
+            display: flex; align-items: center;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-md) var(--spacing-lg);
+            background: rgba(220, 38, 38, .06);
+            border: 1px solid rgba(220, 38, 38, .2);
+            border-radius: var(--radius-lg);
+            font-size: 0.875rem; font-weight: 500;
+            color: var(--color-danger);
+            margin-bottom: var(--spacing-xl);
+        }
+        .status-dot {
+            width: 8px; height: 8px; border-radius: 50%;
+            background: var(--color-danger);
+            flex-shrink: 0;
+            animation: pulse 2s ease infinite;
+        }
+
+        /* CTA Buttons */
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            gap: var(--spacing-sm);
+            padding: 0.6875rem 1.5rem;
+            border-radius: var(--radius-lg);
+            font-weight: 600; font-size: 0.9375rem;
+            border: none; cursor: pointer;
+            transition: all var(--transition-base);
+            text-decoration: none;
+            font-family: var(--font-primary);
+            white-space: nowrap;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+            color: white; width: 100%;
+            padding: 0.9375rem; font-size: 1rem;
+            box-shadow: var(--shadow-md);
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        .btn-primary:active { transform: translateY(0); }
+
+        .btn-outline {
+            background: var(--color-surface);
+            color: var(--color-text);
+            border: 1px solid var(--color-border);
+            width: 100%;
+            padding: 0.9375rem; font-size: 1rem;
+            box-shadow: var(--shadow-xs);
+        }
+        .btn-outline:hover {
+            background: var(--color-surface-alt);
+            border-color: var(--color-primary);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-success {
+            background: var(--color-success); color: white;
+            width: 100%; padding: 0.9375rem; font-size: 1rem;
+            box-shadow: var(--shadow-sm);
+        }
+        .btn-success:hover { background: #047857; transform: translateY(-2px); box-shadow: var(--shadow-md); }
+
+        .btn-sm {
+            padding: 0.5rem 1.125rem;
+            font-size: 0.875rem; width: auto;
+        }
+
+        .cta-group {
+            display: flex; flex-direction: column;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        /* After-launch hint */
+        .hint-box {
+            display: flex; gap: var(--spacing-md);
+            padding: var(--spacing-lg);
+            background: rgba(5,150,105,.06);
+            border: 1px solid rgba(5,150,105,.2);
+            border-radius: var(--radius-lg);
+            font-size: 0.875rem; color: var(--color-text-secondary);
+            margin-bottom: var(--spacing-2xl);
+        }
+        .hint-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
+        .hint-box strong { color: var(--color-text); }
+
+        /* Divider */
+        .divider {
+            display: flex; align-items: center; gap: var(--spacing-lg);
+            margin: var(--spacing-2xl) 0;
+            color: var(--color-text-muted);
+            font-size: 0.75rem; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.06em;
+        }
+        .divider::before, .divider::after {
+            content: ''; flex: 1; height: 1px;
+            background: var(--color-border);
+        }
+
+        /* Feature grid */
+        .feature-grid {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-2xl);
+        }
+        .feat {
+            display: flex; align-items: flex-start;
+            gap: var(--spacing-md);
+            padding: var(--spacing-lg);
+            background: var(--color-surface-alt);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            transition: all var(--transition-base);
+        }
+        .feat:hover { border-color: var(--color-primary); box-shadow: var(--shadow-sm); }
+        .feat-icon {
+            width: 36px; height: 36px; flex-shrink: 0;
+            background: rgba(30,58,138,.08);
+            border-radius: var(--radius-md);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1rem;
+        }
+        [data-theme="dark"] .feat-icon { background: rgba(59,130,246,.12); }
+        .feat-title { font-size: 0.875rem; font-weight: 600; color: var(--color-text); margin-bottom: 2px; }
+        .feat-desc  { font-size: 0.8125rem; color: var(--color-text-muted); line-height: 1.5; }
+
+        /* Download strip */
+        .download-strip {
+            display: flex; align-items: center; justify-content: space-between;
+            gap: var(--spacing-lg);
+            padding: var(--spacing-xl);
+            background: linear-gradient(135deg, rgba(30,58,138,.05), rgba(217,119,6,.04));
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            margin-bottom: var(--spacing-xl);
+        }
+        .download-info { flex: 1; min-width: 0; }
+        .download-title { font-size: 0.9375rem; font-weight: 700; color: var(--color-text); margin-bottom: 2px; }
+        .download-meta { font-size: 0.8125rem; color: var(--color-text-muted); }
+        .btn-accent {
+            background: var(--color-accent); color: white;
+            padding: 0.6875rem 1.25rem; font-size: 0.9375rem;
+            white-space: nowrap; flex-shrink: 0;
+            box-shadow: var(--shadow-sm);
+            border: none; cursor: pointer;
+            border-radius: var(--radius-lg);
+            font-weight: 600; font-family: var(--font-primary);
+            display: inline-flex; align-items: center; gap: var(--spacing-sm);
+            text-decoration: none;
+            transition: all var(--transition-base);
+        }
+        .btn-accent:hover { background: #b45309; transform: translateY(-2px); box-shadow: var(--shadow-md); }
+
+        /* Collapsible troubleshoot */
+        .collapse-trigger {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: var(--spacing-lg);
+            background: var(--color-surface-alt);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            cursor: pointer;
+            font-weight: 600; font-size: 0.9rem;
+            color: var(--color-text-secondary);
+            transition: all var(--transition-base);
+            user-select: none;
+        }
+        .collapse-trigger:hover { border-color: var(--color-primary); color: var(--color-text); }
+        .collapse-arrow { font-size: 0.875rem; transition: transform var(--transition-base); }
+        .collapse-arrow.open { transform: rotate(180deg); }
+        .collapse-body {
+            overflow: hidden; max-height: 0;
+            transition: max-height 0.35s ease;
+        }
+        .collapse-body.open { max-height: 1200px; }
+        .collapse-inner {
+            padding-top: var(--spacing-lg);
+            display: flex; flex-direction: column; gap: var(--spacing-md);
+        }
+
+        /* Steps list */
+        .steps-list { display: flex; flex-direction: column; gap: var(--spacing-md); }
+        .step-item {
+            display: flex; align-items: flex-start; gap: var(--spacing-lg);
+            padding: var(--spacing-lg);
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+        }
+        .step-num {
+            width: 32px; height: 32px; flex-shrink: 0;
+            background: var(--color-primary); color: white;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 0.875rem;
+            font-family: var(--font-mono);
+        }
+        .step-title { font-weight: 600; font-size: 0.9rem; color: var(--color-text); margin-bottom: 2px; }
+        .step-desc  { font-size: 0.8125rem; color: var(--color-text-muted); line-height: 1.5; }
+
+        .info-note {
+            display: flex; gap: var(--spacing-md);
+            padding: var(--spacing-lg);
+            background: rgba(30,58,138,.05);
+            border: 1px solid rgba(30,58,138,.15);
+            border-radius: var(--radius-lg);
+            font-size: 0.875rem; color: var(--color-text-secondary);
+            line-height: 1.6;
+        }
+        [data-theme="dark"] .info-note {
+            background: rgba(59,130,246,.08);
+            border-color: rgba(59,130,246,.2);
+        }
+        .info-note-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
+
+        /* ===== HOW IT WORKS ===== */
+        .how-card {
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-2xl);
+            box-shadow: var(--shadow-sm);
+            margin-top: var(--spacing-xl);
+            animation: fadeInUp 0.5s ease-out 0.15s both;
+        }
+        .how-card h3 {
+            font-size: 1.125rem; font-weight: 700;
+            margin-bottom: var(--spacing-xl);
+            color: var(--color-text);
+        }
+        .how-grid {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-md);
+        }
+        .how-item {
+            padding: var(--spacing-lg);
+            background: var(--color-surface-alt);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+        }
+        .how-item-head {
+            display: flex; align-items: center; gap: var(--spacing-sm);
+            font-weight: 600; font-size: 0.875rem;
+            color: var(--color-primary); margin-bottom: var(--spacing-sm);
+        }
+        [data-theme="dark"] .how-item-head { color: var(--color-primary-light); }
+        .how-item p { font-size: 0.8125rem; color: var(--color-text-muted); line-height: 1.6; }
+
+        /* ===== FOOTER (match provided CSS) ===== */
+        .footer {
+            position: relative; z-index: 10;
+            padding: var(--spacing-2xl) 0;
+            margin-top: var(--spacing-3xl);
+            background: var(--color-surface);
+            border-top: 2px solid var(--color-primary);
+        }
+        .footer-content {
+            display: flex; flex-direction: column;
+            align-items: center; gap: var(--spacing-lg);
+            text-align: center;
+        }
+        .footer-brand strong {
+            font-size: 1.125rem; color: var(--color-primary);
+            font-weight: 700; letter-spacing: -0.025em;
             display: block;
         }
+        [data-theme="dark"] .footer-brand strong { color: var(--color-primary-light); }
+        .footer-brand span { font-size: 0.875rem; color: var(--color-text-secondary); font-weight: 500; }
+        .footer-info { color: var(--color-text-secondary); font-size: 0.8125rem; }
+        .footer-info p { margin: var(--spacing-xs) 0; }
+        .footer-note { font-style: italic; opacity: .8; }
 
-        /* Loading state */
-        .loading-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1.5rem;
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to   { opacity: 1; transform: translateY(0); }
         }
-
-        .spinner {
-            width: 60px;
-            height: 60px;
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            border-top-color: white;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        .loading-text {
-            font-size: 1.125rem;
-            font-weight: 500;
-        }
-
-        .loading-subtext {
-            font-size: 0.875rem;
-            opacity: 0.8;
-        }
-
-        /* Success state (App Running) */
-        .success-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1.5rem;
-        }
-
-        .check-icon {
-            width: 80px;
-            height: 80px;
-            background: #10b981;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            animation: scaleIn 0.5s ease-out;
-        }
-
         @keyframes scaleIn {
-            from { transform: scale(0); }
-            to { transform: scale(1); }
+            from { transform: scale(0.5); opacity: 0; }
+            to   { transform: scale(1);   opacity: 1; }
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50%       { opacity: 0.4; }
         }
 
-        .success-message {
-            font-size: 1.5rem;
-            font-weight: 600;
-            text-align: center;
-        }
-
-        .countdown {
-            font-size: 3rem;
-            font-weight: bold;
-            margin: 1rem 0;
-        }
-
-        .redirect-message {
-            font-size: 1rem;
-            opacity: 0.9;
-            text-align: center;
-        }
-
-        /* Not running state */
-        .hero-text {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .hero-text h2 {
-            font-size: 1.75rem;
-            margin-bottom: 0.75rem;
-        }
-
-        .hero-text p {
-            font-size: 1rem;
-            opacity: 0.9;
-            line-height: 1.6;
-        }
-
-        /* Buttons */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.75rem;
-            padding: 1.25rem 2rem;
-            background: white;
-            color: #1e3a8a;
-            border: none;
-            border-radius: 12px;
-            font-size: 1.25rem;
-            font-weight: 600;
-            cursor: pointer;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-            width: 100%;
-            text-align: center;
-            margin-bottom: 1rem;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
-        }
-
-        .btn-launch {
-            background: #10b981;
-            color: white;
-            font-size: 1.5rem;
-            padding: 1.5rem 2rem;
-        }
-
-        .btn-launch:hover {
-            background: #059669;
-        }
-
-        .btn-download {
-            background: #fbbf24;
-            color: #1e3a8a;
-        }
-
-        .btn-download:hover {
-            background: #f59e0b;
-        }
-
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            font-size: 1rem;
-            padding: 0.875rem 1.5rem;
-        }
-
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
-
-        .btn-refresh {
-            background: #10b981;
-            color: white;
-            font-size: 1rem;
-            padding: 0.875rem 1.5rem;
-        }
-
-        .btn-refresh:hover {
-            background: #059669;
-        }
-
-        /* Section divider */
-        .section-divider {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin: 2rem 0 1.5rem;
-        }
-
-        .section-divider::before,
-        .section-divider::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: rgba(255, 255, 255, 0.3);
-        }
-
-        .section-divider-text {
-            font-size: 0.875rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            opacity: 0.7;
-        }
-
-        /* Info boxes */
-        .info-box {
-            background: rgba(59, 130, 246, 0.2);
-            border: 1px solid rgba(59, 130, 246, 0.4);
-            border-radius: 12px;
-            padding: 1.25rem;
-            margin: 1.5rem 0;
-        }
-
-        .info-title {
-            font-weight: 600;
-            margin-bottom: 0.75rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .info-text {
-            font-size: 0.95rem;
-            line-height: 1.6;
-            opacity: 0.9;
-        }
-
-        .alert-box {
-            background: rgba(251, 191, 36, 0.2);
-            border: 2px solid #fbbf24;
-            border-radius: 12px;
-            padding: 1.25rem;
-            margin: 1.5rem 0;
-        }
-
-        .alert-box .info-title {
-            color: #fbbf24;
-        }
-
-        /* Features */
-        .features {
-            display: grid;
-            gap: 1rem;
-            margin: 2rem 0;
-        }
-
-        .feature {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 1rem;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-        }
-
-        .feature-icon {
-            font-size: 1.5rem;
-            flex-shrink: 0;
-        }
-
-        .feature-text {
-            flex: 1;
-        }
-
-        .feature-title {
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-        }
-
-        .feature-desc {
-            font-size: 0.875rem;
-            opacity: 0.8;
-        }
-
-        /* Steps */
-        .steps {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-        }
-
-        .steps h3 {
-            font-size: 1.25rem;
-            margin-bottom: 1rem;
-            text-align: center;
-        }
-
-        .step {
-            display: flex;
-            align-items: flex-start;
-            gap: 1rem;
-            margin: 1rem 0;
-            padding: 1rem;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-        }
-
-        .step-number {
-            width: 36px;
-            height: 36px;
-            background: #fbbf24;
-            color: #1e3a8a;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 1.25rem;
-            flex-shrink: 0;
-        }
-
-        .step-content {
-            flex: 1;
-        }
-
-        .step-title {
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-        }
-
-        .step-desc {
-            font-size: 0.9rem;
-            opacity: 0.9;
-        }
-
-        .system-req {
-            font-size: 0.875rem;
-            opacity: 0.8;
-            line-height: 1.6;
-            margin-top: 1rem;
-            text-align: center;
-        }
-
-        /* Troubleshooting collapsible */
-        .troubleshooting {
-            margin-top: 1.5rem;
-        }
-
-        .troubleshooting-toggle {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
-            padding: 1rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            transition: all 0.3s ease;
-        }
-
-        .troubleshooting-toggle:hover {
-            background: rgba(255, 255, 255, 0.15);
-        }
-
-        .troubleshooting-toggle-text {
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .troubleshooting-arrow {
-            font-size: 1.25rem;
-            transition: transform 0.3s ease;
-        }
-
-        .troubleshooting-arrow.open {
-            transform: rotate(180deg);
-        }
-
-        .troubleshooting-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-        }
-
-        .troubleshooting-content.open {
-            max-height: 1000px;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2rem;
-            }
-            .card {
-                padding: 1.5rem;
-            }
-            .btn-launch {
-                font-size: 1.25rem;
-            }
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 640px) {
+            .card { padding: var(--spacing-xl); }
+            .feature-grid { grid-template-columns: 1fr; }
+            .how-grid { grid-template-columns: 1fr; }
+            .download-strip { flex-direction: column; align-items: flex-start; }
+            .badge { display: none; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="logo">UJI</div>
-        <h1>COUNTER EETA</h1>
-        <p class="subtitle">Aplikasi Pembantu Penyusunan Laporan Keuangan (Lanjutan Inovasi LKPD EETA)</p>
+    <div class="bg-gradient"></div>
+    <div class="bg-grid"></div>
 
-        <div class="card">
-            <!-- Loading State -->
-            <div class="state active" id="loadingState">
-                <div class="loading-content">
-                    <div class="spinner"></div>
-                    <p class="loading-text">Memeriksa aplikasi...</p>
-                    <p class="loading-subtext">Mohon tunggu sebentar</p>
+    <!-- HEADER -->
+    <header class="header">
+        <div class="container-wide">
+            <div class="logo">
+                <div class="logo-icon">CE</div>
+                <div class="logo-text">
+                    <span class="logo-title">COUNTER EETA</span>
+                    <span class="logo-subtitle">Pemerintah Provinsi Bali</span>
                 </div>
             </div>
-
-            <!-- Success State (App Running - Auto Redirect) -->
-            <div class="state" id="successState">
-                <div class="success-content">
-                    <div class="check-icon">✓</div>
-                    <div class="success-message">Aplikasi Terdeteksi!</div>
-                    <div class="countdown" id="countdown">3</div>
-                    <div class="redirect-message">Mengarahkan ke aplikasi...</div>
-                    <button class="btn btn-secondary" onclick="redirectNow()">
-                        Buka Sekarang
-                    </button>
-                </div>
-            </div>
-
-            <!-- Not Running State (Main Content) -->
-            <div class="state" id="notRunningState">
-                <div class="hero-text">
-                    <h2>🚀 Mulai Analisis Laporan Keuangan</h2>
-                    <p>
-                        Aplikasi belum berjalan. Klik tombol di bawah untuk membuka aplikasi COUNTER EETA secara otomatis.
-                    </p>
-                </div>
-
-                <!-- Launch Button (Custom Protocol) -->
-                <a href="counter-eeta://launch" class="btn btn-launch" id="launchBtn">
-                    🚀 Buka Aplikasi
-                </a>
-
-                <!-- Info after launch -->
-                <div class="info-box" style="background: rgba(16, 185, 129, 0.2); border-color: rgba(16, 185, 129, 0.4);">
-                    <div class="info-title">
-                        💡 Setelah Klik Tombol:
-                    </div>
-                    <div class="info-text">
-                        • Browser akan meminta konfirmasi - klik <strong>"Open"</strong> atau <strong>"Buka"</strong><br>
-                        • Aplikasi akan terbuka otomatis dalam beberapa detik<br>
-                        • Halaman ini akan otomatis refresh dan redirect ke aplikasi
-                    </div>
-                </div>
-
-                <!-- Refresh Button -->
-                <button class="btn btn-refresh" onclick="reloadPage()">
-                    🔄 Coba Lagi / Refresh
+            <div class="header-info">
+                <span class="badge">v0.2.0 BETA</span>
+                <button class="theme-toggle" onclick="toggleTheme()" title="Toggle tema">
+                    <span id="themeIcon">🌙</span>
                 </button>
+            </div>
+        </div>
+    </header>
 
-                <!-- Section Divider -->
-                <div class="section-divider">
-                    <span class="section-divider-text">Belum Punya Aplikasinya?</span>
+    <!-- MAIN -->
+    <main class="main-content">
+        <div class="container">
+
+            <!-- LOADING STATE -->
+            <div class="state active" id="loadingState">
+                <div class="card">
+                    <div class="card-inner">
+                        <div class="loading-spinner"></div>
+                        <div>
+                            <p class="loading-label">Memeriksa aplikasi…</p>
+                            <p class="loading-sub">Mohon tunggu sebentar</p>
+                        </div>
+                    </div>
                 </div>
+            </div>
 
-                <!-- Download Section -->
-                <div style="text-align: center; margin: 2rem 0 1.5rem;">
-                    <p style="opacity: 0.9; margin-bottom: 1.5rem;">
-                        Download COUNTER EETA untuk membantu penyusunan laporan keuangan dengan fitur-fitur otomatis.
+            <!-- SUCCESS STATE -->
+            <div class="state" id="successState">
+                <div class="card">
+                    <div class="card-inner">
+                        <div class="check-ring">✓</div>
+                        <div class="success-label">Aplikasi Terdeteksi!</div>
+                        <div class="countdown-ring">
+                            <svg class="countdown-svg" width="72" height="72" viewBox="0 0 72 72">
+                                <circle class="countdown-track" cx="36" cy="36" r="32"/>
+                                <circle class="countdown-arc" id="countdownArc" cx="36" cy="36" r="32"/>
+                            </svg>
+                            <div class="countdown-num" id="countdown">3</div>
+                        </div>
+                        <p class="redirect-sub">Mengarahkan ke aplikasi dalam beberapa saat…</p>
+                        <button class="btn btn-success btn-sm" onclick="redirectNow()">Buka Sekarang →</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NOT RUNNING STATE -->
+            <div class="state" id="notRunningState">
+
+                <!-- Hero -->
+                <div class="hero">
+                    <div style="display:flex;justify-content:center;margin-bottom:var(--spacing-lg)">
+                        <span class="section-eyebrow">Sistem Pembantu Penyusunan Laporan Keuangan Pemerintah Daerah</span>
+                    </div>
+                    <h1 class="hero-title">
+                        <span class="title-main">Analisis Laporan Keuangan</span>
+                        <span class="title-accent">Otomatis & Profesional</span>
+                    </h1>
+                    <p class="hero-desc">
+                        Platform pengolah LKPD berbasis CALK — dari pivot otomatis,
+                        tabel Word, hingga grafik visual dalam satu klik.
                     </p>
                 </div>
 
-                <div class="features">
-                    <div class="feature">
-                        <span class="feature-icon">⚡</span>
-                        <div class="feature-text">
-                            <div class="feature-title">Analisis Otomatis & Cepat</div>
-                            <div class="feature-desc">Hitung rasio keuangan dalam hitungan detik</div>
+                <!-- Card utama -->
+                <div class="card">
+
+                    <!-- Status -->
+                    <div class="status-bar">
+                        <div class="status-dot"></div>
+                        Aplikasi belum berjalan di komputer ini
+                    </div>
+
+                    <!-- CTA -->
+                    <div class="cta-group">
+                        <a href="counter-eeta://launch" class="btn btn-primary" id="launchBtn">
+                            🚀 &nbsp;Buka Aplikasi COUNTER EETA
+                        </a>
+                        <button class="btn btn-outline" onclick="reloadPage()">
+                            🔄 &nbsp;Coba Lagi / Refresh
+                        </button>
+                    </div>
+
+                    <!-- After-launch hint -->
+                    <div class="hint-box">
+                        <span class="hint-icon">💡</span>
+                        <div>
+                            Setelah klik tombol di atas, browser akan meminta konfirmasi —
+                            klik <strong>"Open"</strong> atau <strong>"Buka"</strong>.
+                            Halaman ini otomatis refresh dalam 5 detik untuk mendeteksi aplikasi.
                         </div>
                     </div>
-                    <div class="feature">
-                        <span class="feature-icon">📊</span>
-                        <div class="feature-text">
-                            <div class="feature-title">Export Excel & PDF</div>
-                            <div class="feature-desc">Hasil analisis siap untuk laporan</div>
+
+                    <!-- Divider -->
+                    <div class="divider">Belum punya aplikasinya?</div>
+
+                    <!-- Features -->
+                    <div class="feature-grid">
+                        <div class="feat">
+                            <div class="feat-icon">⚡</div>
+                            <div>
+                                <div class="feat-title">Fitur Canggih</div>
+                                <div class="feat-desc">Generasi CALK dan Uji PA secara otomatis dalam hitungan detik</div>
+                            </div>
+                        </div>
+                        <div class="feat">
+                            <div class="feat-icon">📊</div>
+                            <div>
+                                <div class="feat-title">Export Lengkap</div>
+                                <div class="feat-desc">Generasi CALK dalam bentuk Word dan Kertas Kerja Uji PA dalam bentuk Excel dan PDF</div>
+                            </div>
+                        </div>
+                        <div class="feat">
+                            <div class="feat-icon">🔒</div>
+                            <div>
+                                <div class="feat-title">Data Lokal & Aman</div>
+                                <div class="feat-desc">Semua diproses di komputer secara lokal, tidak ada melalui internet</div>
+                            </div>
+                        </div>
+                        <div class="feat">
+                            <div class="feat-icon">💻</div>
+                            <div>
+                                <div class="feat-title">Offline Ready</div>
+                                <div class="feat-desc">Bekerja tanpa internet setelah terinstall</div>
+                            </div>
                         </div>
                     </div>
-                    <div class="feature">
-                        <span class="feature-icon">🔒</span>
-                        <div class="feature-text">
-                            <div class="feature-title">Data Lokal & Aman</div>
-                            <div class="feature-desc">Semua data diproses di komputer Anda</div>
+
+                    <!-- Download -->
+                    <div class="download-strip">
+                        <div class="download-info">
+                            <div class="download-title">Download COUNTER EETA</div>
+                            <div class="download-meta">~50 MB &nbsp;·&nbsp; Windows 10/11 &nbsp;·&nbsp; Gratis</div>
+                        </div>
+                        <a href="https://github.com/lkpdeetaprovinsibali-lab/COUNTER-EETA-LANDING/releases"
+                           class="btn-accent" target="_blank" rel="noopener noreferrer">
+                            📥 &nbsp;Download
+                        </a>
+                    </div>
+
+                    <!-- Troubleshooting collapsible -->
+                    <div>
+                        <div class="collapse-trigger" onclick="toggleCollapse()">
+                            <span>❓ &nbsp;Tombol "Buka Aplikasi" tidak bekerja?</span>
+                            <span class="collapse-arrow" id="collapseArrow">▼</span>
+                        </div>
+                        <div class="collapse-body" id="collapseBody">
+                            <div class="collapse-inner">
+                                <div class="steps-list">
+                                    <div class="step-item">
+                                        <div class="step-num">1</div>
+                                        <div>
+                                            <div class="step-title">Cari file <code>CounterEETA.exe</code></div>
+                                            <div class="step-desc">Biasanya ada di folder Downloads atau Desktop</div>
+                                        </div>
+                                    </div>
+                                    <div class="step-item">
+                                        <div class="step-num">2</div>
+                                        <div>
+                                            <div class="step-title">Double-click file .exe</div>
+                                            <div class="step-desc">Izinkan jika muncul SmartScreen Windows</div>
+                                        </div>
+                                    </div>
+                                    <div class="step-item">
+                                        <div class="step-num">3</div>
+                                        <div>
+                                            <div class="step-title">Klik "Coba Lagi" di atas</div>
+                                            <div class="step-desc">Setelah app terbuka, refresh halaman ini untuk auto-redirect</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="info-note">
+                                    <span class="info-note-icon">ℹ️</span>
+                                    <span>
+                                        Tombol otomatis hanya bekerja setelah aplikasi dijalankan
+                                        <strong>minimal 1x secara manual</strong> — supaya Windows
+                                        dapat mendaftarkan protokol <code>counter-eeta://</code>.
+                                        Setelah itu, tombol akan berfungsi permanen. 🎉
+                                    </span>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="feature">
-                        <span class="feature-icon">💻</span>
-                        <div class="feature-text">
-                            <div class="feature-title">Tidak Perlu Internet</div>
-                            <div class="feature-desc">Bekerja offline setelah download</div>
+
+                </div><!-- /card -->
+
+                <!-- How it works (secondary card) -->
+                <div class="how-card">
+                    <h3>🔄 &nbsp;Bagaimana Cara Kerjanya?</h3>
+                    <div class="how-grid">
+                        <div class="how-item">
+                            <div class="how-item-head">❤️ &nbsp;Heartbeat Detection</div>
+                            <p>Halaman otomatis mengecek apakah app sedang berjalan. Jika terdeteksi, langsung redirect tanpa klik apapun.</p>
+                        </div>
+                        <div class="how-item">
+                            <div class="how-item-head">🔗 &nbsp;Custom URL Protocol</div>
+                            <p>Protokol <code>counter-eeta://</code> terdaftar di Windows — sama seperti Zoom atau Telegram — sehingga app langsung terbuka lewat browser.</p>
+                        </div>
+                        <div class="how-item">
+                            <div class="how-item-head">🛡️ &nbsp;Privasi Terjamin</div>
+                            <p>Tidak ada data yang dikirim ke server eksternal. Semua analisis berjalan lokal di komputer Anda.</p>
+                        </div>
+                        <div class="how-item">
+                            <div class="how-item-head">⏱️ &nbsp;Auto Shutdown</div>
+                            <p>App otomatis berhenti 30 detik setelah semua tab browser ditutup, menjaga resource komputer tetap bersih.</p>
                         </div>
                     </div>
                 </div>
 
-                <a href="https://github.com/lkpdeetaprovinsibali-lab/COUNTER-EETA-LANDING/releases" class="btn btn-download" id="downloadBtn" target="_blank" rel="noopener noreferrer">
-                    📥 Download Counter EETA (BETA)
-                </a>
+            </div><!-- /notRunningState -->
+        </div><!-- /container -->
+    </main>
 
-                <p class="system-req">
-                    <strong>Ukuran:</strong> ~50MB | 
-                    <strong>Sistem:</strong> Windows 10/11 | 
-                    <strong>Gratis</strong> - Tanpa biaya apapun
-                </p>
-
-                <!-- Troubleshooting Section -->
-                <div class="troubleshooting">
-                    <div class="troubleshooting-toggle" onclick="toggleTroubleshooting()">
-                        <span class="troubleshooting-toggle-text">
-                            ❓ Tombol "Buka Aplikasi" Tidak Bekerja?
-                        </span>
-                        <span class="troubleshooting-arrow" id="troubleshootingArrow">▼</span>
-                    </div>
-                    <div class="troubleshooting-content" id="troubleshootingContent">
-                        <div class="alert-box" style="margin-top: 1rem;">
-                            <div class="info-title">
-                                🔧 Cara Manual Membuka Aplikasi:
-                            </div>
-                        </div>
-
-                        <div class="steps">
-                            <div class="step">
-                                <div class="step-number">1</div>
-                                <div class="step-content">
-                                    <div class="step-title">Cari File "UjiPAAnalyzer.exe"</div>
-                                    <div class="step-desc">
-                                        Biasanya ada di folder Downloads atau Desktop Anda
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="step">
-                                <div class="step-number">2</div>
-                                <div class="step-content">
-                                    <div class="step-title">Double-Click File .exe</div>
-                                    <div class="step-desc">
-                                        Klik 2x pada file untuk menjalankan aplikasi
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="step">
-                                <div class="step-number">3</div>
-                                <div class="step-content">
-                                    <div class="step-title">Tunggu Browser Terbuka</div>
-                                    <div class="step-desc">
-                                        Aplikasi akan otomatis membuka browser dalam 3-5 detik
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="step">
-                                <div class="step-number">4</div>
-                                <div class="step-content">
-                                    <div class="step-title">Klik "Coba Lagi" di Atas</div>
-                                    <div class="step-desc">
-                                        Setelah aplikasi terbuka, klik tombol refresh untuk auto-redirect
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="info-box">
-                            <div class="info-title">
-                                💡 Kenapa Tombol Tidak Bekerja?
-                            </div>
-                            <div class="info-text">
-                                Tombol otomatis hanya bekerja setelah Anda menjalankan aplikasi minimal <strong>1 kali secara manual</strong>.
-                                Ini karena aplikasi perlu mendaftarkan dirinya ke sistem Windows terlebih dahulu.
-                                <br><br>
-                                Setelah dijalankan 1x manual, tombol "Buka Aplikasi" akan berfungsi untuk seterusnya! 🎉
-                            </div>
-                        </div>
-                    </div>
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container-wide">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <strong>COUNTER EETA</strong>
+                    <span>Inovasi Lanjutan LKPD EETA</span>
+                </div>
+                <div class="footer-info">
+                    <p>Dikembangkan oleh Tim Inovasi &mdash; Pemerintah Provinsi Bali</p>
+                    <p class="footer-note">Untuk keperluan internal penyusunan LKPD. Data bersifat rahasia.</p>
                 </div>
             </div>
         </div>
-
-        <!-- How it Works Card -->
-        <div class="card" id="howItWorksCard" style="display: none;">
-            <h2 style="margin-bottom: 1.5rem; text-align: center;">🤔 Bagaimana Cara Kerjanya?</h2>
-
-            <div class="info-box">
-                <div class="info-title">
-                    🔄 Sistem Auto-Check + Auto-Launch
-                </div>
-                <div class="info-text">
-                    Halaman ini menggunakan 2 teknologi canggih:
-                    <br><br>
-                    <strong>1. Heartbeat Detection:</strong><br>
-                    Secara otomatis mengecek apakah aplikasi sedang berjalan di komputer Anda.
-                    Jika sudah berjalan → langsung redirect otomatis!
-                    <br><br>
-                    <strong>2. Custom URL Protocol:</strong><br>
-                    Tombol "Buka Aplikasi" menggunakan protocol <code>counter-eeta://</code> 
-                    yang terdaftar di Windows - sama seperti Zoom, Telegram, atau uTorrent.
-                    Klik tombol → aplikasi langsung buka otomatis!
-                </div>
-            </div>
-
-            <div class="steps">
-                <h3>📱 Alur Kerja Lengkap:</h3>
-
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <div class="step-content">
-                        <div class="step-title">Buka Website Ini</div>
-                        <div class="step-desc">
-                            Halaman otomatis cek: apakah aplikasi sudah running?
-                        </div>
-                    </div>
-                </div>
-
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <div class="step-content">
-                        <div class="step-title">Jika Sudah Running</div>
-                        <div class="step-desc">
-                            Auto-redirect dalam 3 detik ke aplikasi (localhost:5000)
-                        </div>
-                    </div>
-                </div>
-
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <div class="step-content">
-                        <div class="step-title">Jika Belum Running</div>
-                        <div class="step-desc">
-                            Klik tombol "Buka Aplikasi" → aplikasi otomatis start
-                        </div>
-                    </div>
-                </div>
-
-                <div class="step">
-                    <div class="step-number">4</div>
-                    <div class="step-content">
-                        <div class="step-title">Refresh / Tunggu</div>
-                        <div class="step-desc">
-                            Halaman akan auto-refresh setelah app start, atau klik "Coba Lagi"
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="info-box" style="background: rgba(16, 185, 129, 0.2); border-color: rgba(16, 185, 129, 0.4);">
-                <div class="info-title">
-                    ✅ Keamanan & Privasi Terjamin
-                </div>
-                <div class="info-text">
-                    • Semua data diproses lokal di komputer Anda<br>
-                    • Tidak ada data yang dikirim ke server eksternal<br>
-                    • Aplikasi hanya berjalan saat Anda gunakan<br>
-                    • Auto-shutdown 30 detik setelah browser ditutup<br>
-                    • Source code transparan dan dapat diverifikasi
-                </div>
-            </div>
-        </div>
-    </div>
+    </footer>
 
     <script>
-        const APP_URL = 'http://127.0.0.1:5000';
-        const CHECK_TIMEOUT = 3000;
+        /* =========================================================
+           CONSTANTS
+        ========================================================= */
+        const APP_URL        = 'http://127.0.0.1:5000';
+        const CHECK_TIMEOUT  = 3000;
         const REDIRECT_DELAY = 3;
 
-        let countdownInterval;
-        let countdownValue = REDIRECT_DELAY;
+        let countdownValue   = REDIRECT_DELAY;
+        let countdownTimer   = null;
+        let heartbeatTimer   = null;
 
+        /* =========================================================
+           THEME TOGGLE
+        ========================================================= */
+        function toggleTheme() {
+            const root = document.documentElement;
+            const isDark = root.getAttribute('data-theme') === 'dark';
+            root.setAttribute('data-theme', isDark ? 'light' : 'dark');
+            document.getElementById('themeIcon').textContent = isDark ? '🌙' : '☀️';
+        }
+
+        /* =========================================================
+           STATE MANAGER
+        ========================================================= */
+        function showState(id) {
+            document.querySelectorAll('.state').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+        }
+
+        /* =========================================================
+           APP DETECTION
+        ========================================================= */
         async function checkAppRunning() {
             try {
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), CHECK_TIMEOUT);
-                
-                const response = await fetch(APP_URL, {
-                    method: 'GET',
-                    signal: controller.signal,
-                    mode: 'no-cors'
-                });
-                
-                clearTimeout(timeoutId);
+                const ctrl = new AbortController();
+                const tid  = setTimeout(() => ctrl.abort(), CHECK_TIMEOUT);
+                await fetch(APP_URL, { method: 'GET', signal: ctrl.signal, mode: 'no-cors' });
+                clearTimeout(tid);
                 return true;
-                
-            } catch (error) {
-                console.log('App not detected:', error.message);
+            } catch {
                 return false;
             }
         }
 
-        function showState(stateId) {
-            // Hide all states
-            document.querySelectorAll('.state').forEach(state => {
-                state.classList.remove('active');
-            });
-            
-            // Show selected state
-            document.getElementById(stateId).classList.add('active');
-        }
-
-        function showSuccess() {
-            showState('successState');
-            document.getElementById('howItWorksCard').style.display = 'block';
-            startCountdown();
-        }
-
-        function showNotRunning() {
-            showState('notRunningState');
-            document.getElementById('howItWorksCard').style.display = 'block';
-        }
-
+        /* =========================================================
+           COUNTDOWN + REDIRECT
+        ========================================================= */
         function startCountdown() {
-            const countdownElement = document.getElementById('countdown');
-            
-            countdownInterval = setInterval(() => {
+            const numEl = document.getElementById('countdown');
+            const arc   = document.getElementById('countdownArc');
+            const circ  = 201; // 2πr ≈ 2π×32
+
+            countdownTimer = setInterval(() => {
                 countdownValue--;
-                countdownElement.textContent = countdownValue;
-                
+                numEl.textContent = countdownValue;
+                // shrink arc proportionally
+                arc.style.strokeDashoffset = circ * (1 - countdownValue / REDIRECT_DELAY);
                 if (countdownValue <= 0) {
-                    clearInterval(countdownInterval);
+                    clearInterval(countdownTimer);
                     redirectToApp();
                 }
             }, 1000);
         }
 
         function redirectNow() {
-            if (countdownInterval) {
-                clearInterval(countdownInterval);
-            }
+            clearInterval(countdownTimer);
             redirectToApp();
         }
 
-        function redirectToApp() {
-            window.location.href = APP_URL;
-        }
+        function redirectToApp() { window.location.href = APP_URL; }
+        function reloadPage()    { window.location.reload(); }
 
-        function reloadPage() {
-            window.location.reload();
-        }
-
-        function toggleTroubleshooting() {
-            const content = document.getElementById('troubleshootingContent');
-            const arrow = document.getElementById('troubleshootingArrow');
-            
-            content.classList.toggle('open');
+        /* =========================================================
+           COLLAPSE (troubleshooting)
+        ========================================================= */
+        function toggleCollapse() {
+            const body  = document.getElementById('collapseBody');
+            const arrow = document.getElementById('collapseArrow');
+            body.classList.toggle('open');
             arrow.classList.toggle('open');
         }
 
-        async function init() {
-            console.log('🔍 Checking if app is running...');
-            
-            const isRunning = await checkAppRunning();
-            
-            if (isRunning) {
-                console.log('✅ App detected! Redirecting in 3 seconds...');
-                showSuccess();
-            } else {
-                console.log('⚠️  App not running. Showing launch options.');
-                showNotRunning();
-            }
+        /* =========================================================
+           HEARTBEAT
+        ========================================================= */
+        function sendHeartbeat() {
+            fetch(`${APP_URL}/heartbeat`, { method: 'POST', mode: 'no-cors' }).catch(() => {});
         }
 
-        // Track launch button click
+        function startHeartbeat() {
+            sendHeartbeat();
+            heartbeatTimer = setInterval(sendHeartbeat, 10_000);
+        }
+
+        window.addEventListener('beforeunload', () => clearInterval(heartbeatTimer));
+
+        /* =========================================================
+           LAUNCH BUTTON – auto-refresh after 5s
+        ========================================================= */
         document.addEventListener('DOMContentLoaded', () => {
-            const launchBtn = document.getElementById('launchBtn');
-            if (launchBtn) {
-                launchBtn.addEventListener('click', () => {
-                    console.log('🚀 Launch button clicked');
-                    
-                    // Auto-refresh after 5 seconds to check if app is now running
-                    setTimeout(() => {
-                        console.log('🔄 Auto-refreshing to check app status...');
-                        reloadPage();
-                    }, 5000);
+            const btn = document.getElementById('launchBtn');
+            if (btn) {
+                btn.addEventListener('click', () => {
+                    setTimeout(reloadPage, 5000);
                 });
             }
         });
 
-        // Start checking
-        init();
-
-        // ============================================================
-        // HEARTBEAT SYSTEM - Keep app alive when detected
-        // ============================================================
-        
-        let heartbeatInterval;
-        
-        function startHeartbeat() {
-            // Send heartbeat every 10 seconds
-            heartbeatInterval = setInterval(async () => {
-                try {
-                    await fetch('http://127.0.0.1:5000/heartbeat', {
-                        method: 'POST',
-                        mode: 'no-cors',  // Avoid CORS issues
-                        headers: { 'Content-Type': 'application/json' }
-                    });
-                    console.log('❤️ Heartbeat sent from landing page');
-                } catch (error) {
-                    // Silent fail - app might not be running
-                    console.debug('Heartbeat failed (app may not be running)');
-                }
-            }, 10000); // 10 seconds
-            
-            // Send initial heartbeat immediately
-            fetch('http://127.0.0.1:5000/heartbeat', {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'application/json' }
-            }).catch(() => {});
-        }
-        
-        function stopHeartbeat() {
-            if (heartbeatInterval) {
-                clearInterval(heartbeatInterval);
-                heartbeatInterval = null;
+        /* =========================================================
+           INIT
+        ========================================================= */
+        async function init() {
+            const running = await checkAppRunning();
+            if (running) {
+                showState('successState');
+                startCountdown();
+            } else {
+                showState('notRunningState');
             }
+            startHeartbeat();
         }
-        
-        // Start heartbeat if we're on this page
-        // (will keep app alive even if user stays on landing page)
-        startHeartbeat();
-        
-        // Stop heartbeat when leaving page
-        window.addEventListener('beforeunload', stopHeartbeat);
+
+        init();
     </script>
 </body>
 </html>
-
-
