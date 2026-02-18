@@ -104,6 +104,122 @@
                 linear-gradient(90deg, rgba(148,163,184,.03) 1px, transparent 1px);
         }
 
+        /* ══════════════════════════════════════════════════════
+           UPDATE NOTIFICATION BANNER
+        ══════════════════════════════════════════════════════ */
+        .update-banner {
+            position: relative; z-index: 200;
+            background: linear-gradient(135deg, #0f2044 0%, #1e3a8a 50%, #1d4ed8 100%);
+            border-bottom: 1px solid rgba(255,255,255,.08);
+            overflow: hidden;
+            animation: bannerSlide .4s ease both;
+        }
+        .update-banner.hidden {
+            display: none;
+        }
+        @keyframes bannerSlide {
+            from { transform: translateY(-100%); opacity: 0; }
+            to   { transform: translateY(0);     opacity: 1; }
+        }
+        /* subtle moving shimmer */
+        .update-banner::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: linear-gradient(
+                105deg,
+                transparent 35%,
+                rgba(255,255,255,.04) 50%,
+                transparent 65%
+            );
+            background-size: 200% 100%;
+            animation: shimmer 3s linear infinite;
+        }
+        @keyframes shimmer {
+            from { background-position: 200% center; }
+            to   { background-position: -200% center; }
+        }
+
+        .update-banner-inner {
+            max-width: 1100px; margin: 0 auto; padding: 0 var(--spacing-xl);
+            display: flex; align-items: center; gap: var(--spacing-lg);
+            min-height: 48px;
+            position: relative; z-index: 1;
+        }
+
+        /* New badge */
+        .update-badge {
+            flex-shrink: 0;
+            display: inline-flex; align-items: center; gap: .3rem;
+            background: rgba(255,255,255,.15);
+            border: 1px solid rgba(255,255,255,.25);
+            border-radius: 2rem;
+            padding: .2rem .7rem;
+            font-size: .6875rem; font-weight: 800;
+            letter-spacing: .08em; text-transform: uppercase;
+            color: #fbbf24;
+        }
+        .update-badge-dot {
+            width: 6px; height: 6px; border-radius: 50%;
+            background: #34d399;
+            animation: badgePulse 1.8s ease infinite;
+        }
+        @keyframes badgePulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50%       { opacity: .5; transform: scale(.75); }
+        }
+
+        /* Main text */
+        .update-text {
+            flex: 1; min-width: 0;
+            display: flex; align-items: center; gap: var(--spacing-lg);
+            flex-wrap: wrap;
+        }
+        .update-headline {
+            font-size: .875rem; font-weight: 700; color: white;
+            white-space: nowrap;
+        }
+        .update-highlights {
+            display: flex; flex-wrap: wrap; gap: .375rem;
+        }
+        .update-chip {
+            display: inline-flex; align-items: center; gap: .25rem;
+            padding: .175rem .625rem;
+            background: rgba(255,255,255,.1);
+            border: 1px solid rgba(255,255,255,.15);
+            border-radius: .375rem;
+            font-size: .7rem; font-weight: 600; color: rgba(255,255,255,.85);
+            white-space: nowrap;
+        }
+
+        /* CTA */
+        .update-cta {
+            flex-shrink: 0;
+            display: inline-flex; align-items: center; gap: .375rem;
+            padding: .375rem 1rem;
+            background: #fbbf24; color: #1e3a8a;
+            border-radius: .375rem; border: none;
+            font-size: .8125rem; font-weight: 800;
+            font-family: var(--font-primary);
+            text-decoration: none; cursor: pointer;
+            transition: all .18s ease;
+            white-space: nowrap;
+        }
+        .update-cta:hover { background: #fde68a; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,.2); }
+
+        /* Dismiss */
+        .update-dismiss {
+            flex-shrink: 0;
+            width: 28px; height: 28px;
+            background: rgba(255,255,255,.08);
+            border: 1px solid rgba(255,255,255,.15);
+            border-radius: .375rem;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; color: rgba(255,255,255,.6);
+            font-size: .875rem; transition: all .18s ease;
+        }
+        .update-dismiss:hover { background: rgba(255,255,255,.18); color: white; }
+
+        /* ── HEADER ── */
         .header {
             position: sticky; top: 0; z-index: 100;
             padding: var(--spacing-lg) 0;
@@ -161,7 +277,7 @@
             animation: fadeInUp 0.5s ease-out both;
         }
 
-        /* ── LOADING STATE (initial check) ── */
+        /* ── LOADING STATE ── */
         #loadingState .card-inner {
             display: flex; flex-direction: column;
             align-items: center; gap: var(--spacing-xl);
@@ -177,23 +293,16 @@
         .loading-label { font-size: 1rem; font-weight: 600; color: var(--color-text); }
         .loading-sub   { font-size: 0.875rem; color: var(--color-text-muted); }
 
-        /* ── WAITING STATE (after launch click, 30s) ── */
+        /* ── WAITING STATE ── */
         #waitingState .card-inner {
             display: flex; flex-direction: column;
             align-items: center; gap: var(--spacing-xl);
             padding: var(--spacing-2xl) 0; text-align: center;
         }
-
-        /* Animated orbit/radar for waiting */
-        .radar-wrap {
-            position: relative;
-            width: 100px; height: 100px;
-        }
+        .radar-wrap { position: relative; width: 100px; height: 100px; }
         .radar-ring {
-            position: absolute; inset: 0;
-            border-radius: 50%;
-            border: 2px solid var(--color-primary);
-            opacity: 0;
+            position: absolute; inset: 0; border-radius: 50%;
+            border: 2px solid var(--color-primary); opacity: 0;
             animation: radarPulse 2s ease-out infinite;
         }
         .radar-ring:nth-child(2) { animation-delay: 0.66s; }
@@ -205,48 +314,30 @@
         .radar-dot {
             width: 40px; height: 40px;
             background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.25rem;
-            box-shadow: var(--shadow-md);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-size: 1.25rem; box-shadow: var(--shadow-md);
         }
-
         .waiting-label { font-size: 1.125rem; font-weight: 700; color: var(--color-text); }
         .waiting-sub   { font-size: 0.875rem; color: var(--color-text-muted); max-width: 340px; line-height: 1.6; }
-
-        /* Countdown bar */
-        .wait-bar-wrap {
-            width: 100%; max-width: 320px;
-        }
+        .wait-bar-wrap { width: 100%; max-width: 320px; }
         .wait-bar-label {
             display: flex; justify-content: space-between;
-            font-size: 0.8rem; color: var(--color-text-muted);
-            margin-bottom: var(--spacing-xs);
+            font-size: 0.8rem; color: var(--color-text-muted); margin-bottom: var(--spacing-xs);
         }
-        .wait-bar-track {
-            height: 6px; background: var(--color-border);
-            border-radius: 3px; overflow: hidden;
-        }
+        .wait-bar-track { height: 6px; background: var(--color-border); border-radius: 3px; overflow: hidden; }
         .wait-bar-fill {
             height: 100%;
             background: linear-gradient(90deg, var(--color-primary), var(--color-primary-light));
-            border-radius: 3px;
-            width: 100%;
-            transition: width 1s linear;
+            border-radius: 3px; width: 100%; transition: width 1s linear;
         }
         .wait-secs {
-            font-size: 2.25rem; font-weight: 800;
-            font-family: var(--font-mono);
-            color: var(--color-primary);
-            letter-spacing: -0.04em;
+            font-size: 2.25rem; font-weight: 800; font-family: var(--font-mono);
+            color: var(--color-primary); letter-spacing: -0.04em;
         }
         [data-theme="dark"] .wait-secs { color: var(--color-primary-light); }
-
         .wait-cancel {
-            background: none; border: none;
-            font-size: 0.8125rem; color: var(--color-text-muted);
-            cursor: pointer; font-family: var(--font-primary);
-            text-decoration: underline; padding: 0;
+            background: none; border: none; font-size: 0.8125rem; color: var(--color-text-muted);
+            cursor: pointer; font-family: var(--font-primary); text-decoration: underline; padding: 0;
             transition: color var(--transition-fast);
         }
         .wait-cancel:hover { color: var(--color-danger); }
@@ -259,20 +350,15 @@
         }
         .check-ring {
             width: 80px; height: 80px;
-            background: rgba(5,150,105,.1);
-            border: 2px solid var(--color-success);
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 2rem;
-            animation: scaleIn 0.4s cubic-bezier(.34,1.56,.64,1) both;
+            background: rgba(5,150,105,.1); border: 2px solid var(--color-success);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-size: 2rem; animation: scaleIn 0.4s cubic-bezier(.34,1.56,.64,1) both;
         }
         .success-label { font-size: 1.375rem; font-weight: 700; color: var(--color-text); }
         .countdown-ring { position: relative; width: 72px; height: 72px; }
         .countdown-num {
-            position: absolute; inset: 0;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 2rem; font-weight: 700;
-            font-family: var(--font-mono); color: var(--color-primary);
+            position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+            font-size: 2rem; font-weight: 700; font-family: var(--font-mono); color: var(--color-primary);
         }
         .countdown-svg { transform: rotate(-90deg); }
         .countdown-track { fill: none; stroke: var(--color-border); stroke-width: 4; }
@@ -294,14 +380,10 @@
         }
         [data-theme="dark"] .section-eyebrow { background: rgba(59,130,246,.12); border-color: rgba(59,130,246,.25); color: var(--color-primary-light); }
 
-        .hero {
-            text-align: center; margin-bottom: var(--spacing-3xl);
-            animation: fadeInUp 0.5s ease-out both;
-        }
+        .hero { text-align: center; margin-bottom: var(--spacing-3xl); animation: fadeInUp 0.5s ease-out both; }
         .hero-title {
-            font-size: clamp(1.75rem, 4vw, 2.5rem);
-            font-weight: 800; line-height: 1.15; letter-spacing: -0.03em;
-            margin-bottom: var(--spacing-lg);
+            font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 800;
+            line-height: 1.15; letter-spacing: -0.03em; margin-bottom: var(--spacing-lg);
         }
         .title-main { display: block; color: var(--color-text); }
         .title-accent {
@@ -314,31 +396,25 @@
         .status-bar {
             display: flex; align-items: center; gap: var(--spacing-sm);
             padding: var(--spacing-md) var(--spacing-lg);
-            background: rgba(220, 38, 38, .06);
-            border: 1px solid rgba(220, 38, 38, .2);
-            border-radius: var(--radius-lg);
-            font-size: 0.875rem; font-weight: 500; color: var(--color-danger);
+            background: rgba(220, 38, 38, .06); border: 1px solid rgba(220, 38, 38, .2);
+            border-radius: var(--radius-lg); font-size: 0.875rem; font-weight: 500; color: var(--color-danger);
             margin-bottom: var(--spacing-xl);
         }
         .status-dot {
             width: 8px; height: 8px; border-radius: 50%;
-            background: var(--color-danger); flex-shrink: 0;
-            animation: pulse 2s ease infinite;
+            background: var(--color-danger); flex-shrink: 0; animation: pulse 2s ease infinite;
         }
 
         .btn {
             display: inline-flex; align-items: center; justify-content: center;
             gap: var(--spacing-sm); padding: 0.6875rem 1.5rem;
-            border-radius: var(--radius-lg);
-            font-weight: 600; font-size: 0.9375rem;
-            border: none; cursor: pointer;
-            transition: all var(--transition-base);
+            border-radius: var(--radius-lg); font-weight: 600; font-size: 0.9375rem;
+            border: none; cursor: pointer; transition: all var(--transition-base);
             text-decoration: none; font-family: var(--font-primary); white-space: nowrap;
         }
         .btn-primary {
             background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
-            color: white; width: 100%; padding: 0.9375rem; font-size: 1rem;
-            box-shadow: var(--shadow-md);
+            color: white; width: 100%; padding: 0.9375rem; font-size: 1rem; box-shadow: var(--shadow-md);
         }
         .btn-primary:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
         .btn-primary:active { transform: translateY(0); }
@@ -358,11 +434,9 @@
         .cta-group { display: flex; flex-direction: column; gap: var(--spacing-md); margin-bottom: var(--spacing-2xl); }
 
         .hint-box {
-            display: flex; gap: var(--spacing-md);
-            padding: var(--spacing-lg);
+            display: flex; gap: var(--spacing-md); padding: var(--spacing-lg);
             background: rgba(5,150,105,.06); border: 1px solid rgba(5,150,105,.2);
-            border-radius: var(--radius-lg);
-            font-size: 0.875rem; color: var(--color-text-secondary);
+            border-radius: var(--radius-lg); font-size: 0.875rem; color: var(--color-text-secondary);
             margin-bottom: var(--spacing-2xl);
         }
         .hint-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
@@ -370,16 +444,14 @@
 
         .divider {
             display: flex; align-items: center; gap: var(--spacing-lg);
-            margin: var(--spacing-2xl) 0;
-            color: var(--color-text-muted); font-size: 0.75rem; font-weight: 600;
-            text-transform: uppercase; letter-spacing: 0.06em;
+            margin: var(--spacing-2xl) 0; color: var(--color-text-muted);
+            font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em;
         }
         .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--color-border); }
 
         .feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-md); margin-bottom: var(--spacing-2xl); }
         .feat {
-            display: flex; align-items: flex-start; gap: var(--spacing-md);
-            padding: var(--spacing-lg);
+            display: flex; align-items: flex-start; gap: var(--spacing-md); padding: var(--spacing-lg);
             background: var(--color-surface-alt); border: 1px solid var(--color-border);
             border-radius: var(--radius-lg); transition: all var(--transition-base);
         }
@@ -397,16 +469,14 @@
             display: flex; align-items: center; justify-content: space-between;
             gap: var(--spacing-lg); padding: var(--spacing-xl);
             background: linear-gradient(135deg, rgba(30,58,138,.05), rgba(217,119,6,.04));
-            border: 1px solid var(--color-border);
-            border-radius: var(--radius-lg); margin-bottom: var(--spacing-xl);
+            border: 1px solid var(--color-border); border-radius: var(--radius-lg); margin-bottom: var(--spacing-xl);
         }
         .download-info { flex: 1; min-width: 0; }
         .download-title { font-size: 0.9375rem; font-weight: 700; color: var(--color-text); margin-bottom: 2px; }
         .download-meta  { font-size: 0.8125rem; color: var(--color-text-muted); }
         .btn-accent {
-            background: var(--color-accent); color: white;
-            padding: 0.6875rem 1.25rem; font-size: 0.9375rem;
-            white-space: nowrap; flex-shrink: 0; box-shadow: var(--shadow-sm);
+            background: var(--color-accent); color: white; padding: 0.6875rem 1.25rem;
+            font-size: 0.9375rem; white-space: nowrap; flex-shrink: 0; box-shadow: var(--shadow-sm);
             border: none; cursor: pointer; border-radius: var(--radius-lg);
             font-weight: 600; font-family: var(--font-primary);
             display: inline-flex; align-items: center; gap: var(--spacing-sm);
@@ -415,8 +485,7 @@
         .btn-accent:hover { background: #b45309; transform: translateY(-2px); box-shadow: var(--shadow-md); }
 
         .collapse-trigger {
-            display: flex; align-items: center; justify-content: space-between;
-            padding: var(--spacing-lg);
+            display: flex; align-items: center; justify-content: space-between; padding: var(--spacing-lg);
             background: var(--color-surface-alt); border: 1px solid var(--color-border);
             border-radius: var(--radius-lg); cursor: pointer;
             font-weight: 600; font-size: 0.9rem; color: var(--color-text-secondary);
@@ -431,10 +500,8 @@
 
         .steps-list { display: flex; flex-direction: column; gap: var(--spacing-md); }
         .step-item {
-            display: flex; align-items: flex-start; gap: var(--spacing-lg);
-            padding: var(--spacing-lg);
-            background: var(--color-surface); border: 1px solid var(--color-border);
-            border-radius: var(--radius-lg);
+            display: flex; align-items: flex-start; gap: var(--spacing-lg); padding: var(--spacing-lg);
+            background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg);
         }
         .step-num {
             width: 32px; height: 32px; flex-shrink: 0;
@@ -448,36 +515,31 @@
         .info-note {
             display: flex; gap: var(--spacing-md); padding: var(--spacing-lg);
             background: rgba(30,58,138,.05); border: 1px solid rgba(30,58,138,.15);
-            border-radius: var(--radius-lg); font-size: 0.875rem;
-            color: var(--color-text-secondary); line-height: 1.6;
+            border-radius: var(--radius-lg); font-size: 0.875rem; color: var(--color-text-secondary); line-height: 1.6;
         }
         [data-theme="dark"] .info-note { background: rgba(59,130,246,.08); border-color: rgba(59,130,246,.2); }
         .info-note-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
 
         .how-card {
             background: var(--color-surface); border: 1px solid var(--color-border);
-            border-radius: var(--radius-xl); padding: var(--spacing-2xl);
-            box-shadow: var(--shadow-sm); margin-top: var(--spacing-xl);
-            animation: fadeInUp 0.5s ease-out 0.15s both;
+            border-radius: var(--radius-xl); padding: var(--spacing-2xl); box-shadow: var(--shadow-sm);
+            margin-top: var(--spacing-xl); animation: fadeInUp 0.5s ease-out 0.15s both;
         }
         .how-card h3 { font-size: 1.125rem; font-weight: 700; margin-bottom: var(--spacing-xl); color: var(--color-text); }
         .how-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-md); }
         .how-item {
-            padding: var(--spacing-lg);
-            background: var(--color-surface-alt); border: 1px solid var(--color-border);
-            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg); background: var(--color-surface-alt);
+            border: 1px solid var(--color-border); border-radius: var(--radius-lg);
         }
         .how-item-head {
             display: flex; align-items: center; gap: var(--spacing-sm);
-            font-weight: 600; font-size: 0.875rem; color: var(--color-primary);
-            margin-bottom: var(--spacing-sm);
+            font-weight: 600; font-size: 0.875rem; color: var(--color-primary); margin-bottom: var(--spacing-sm);
         }
         [data-theme="dark"] .how-item-head { color: var(--color-primary-light); }
         .how-item p { font-size: 0.8125rem; color: var(--color-text-muted); line-height: 1.6; }
 
         .footer {
-            position: relative; z-index: 10;
-            padding: var(--spacing-2xl) 0; margin-top: var(--spacing-3xl);
+            position: relative; z-index: 10; padding: var(--spacing-2xl) 0; margin-top: var(--spacing-3xl);
             background: var(--color-surface); border-top: 2px solid var(--color-primary);
         }
         .footer-content { display: flex; flex-direction: column; align-items: center; gap: var(--spacing-lg); text-align: center; }
@@ -504,12 +566,52 @@
             .how-grid { grid-template-columns: 1fr; }
             .download-strip { flex-direction: column; align-items: flex-start; }
             .badge { display: none; }
+            /* Banner responsive */
+            .update-badge { display: none; }
+            .update-highlights { display: none; }
+            .update-headline { font-size: .8125rem; white-space: normal; }
+            .update-banner-inner { min-height: 44px; gap: var(--spacing-md); }
         }
     </style>
 </head>
 <body>
     <div class="bg-gradient"></div>
     <div class="bg-grid"></div>
+
+    <!-- ══════════════════════════════════════════════════════
+         UPDATE NOTIFICATION BANNER — v0.3.0
+         Ganti BANNER_VERSION setiap rilis baru untuk memicu
+         notif ulang ke user yang sudah dismiss sebelumnya.
+    ══════════════════════════════════════════════════════ -->
+    <div class="update-banner" id="updateBanner">
+        <div class="update-banner-inner">
+            <!-- Badge -->
+            <div class="update-badge">
+                <div class="update-badge-dot"></div>
+                Baru
+            </div>
+
+            <!-- Text + chips -->
+            <div class="update-text">
+                <span class="update-headline">COUNTER EETA v0.3.0 tersedia!</span>
+                <div class="update-highlights">
+                    <span class="update-chip">📖 Panduan CALK interaktif</span>
+                    <span class="update-chip">▶ Demo animasi 7 langkah</span>
+                    <span class="update-chip">📋 Panduan persiapan Uji PA</span>
+                    <span class="update-chip">🔧 4 bug fix stabilitas</span>
+                </div>
+            </div>
+
+            <!-- CTA -->
+            <a href="https://github.com/lkpdeetaprovinsibali-lab/COUNTER-EETA-LANDING/releases/tag/v0.3.0"
+               class="update-cta" target="_blank" rel="noopener noreferrer">
+                📥 Download
+            </a>
+
+            <!-- Dismiss -->
+            <button class="update-dismiss" onclick="dismissBanner()" title="Tutup notifikasi">✕</button>
+        </div>
+    </div>
 
     <header class="header">
         <div class="container-wide">
@@ -549,7 +651,6 @@
             <div class="state" id="waitingState">
                 <div class="card">
                     <div class="card-inner">
-                        <!-- Radar animation -->
                         <div class="radar-wrap">
                             <div class="radar-ring"></div>
                             <div class="radar-ring"></div>
@@ -558,17 +659,12 @@
                                 <div class="radar-dot">🔍</div>
                             </div>
                         </div>
-
                         <div class="waiting-label">Menunggu Aplikasi Dibuka…</div>
                         <p class="waiting-sub">
                             Silakan klik <strong>"Open"</strong> atau <strong>"Buka"</strong> pada dialog browser,
                             lalu tunggu aplikasi menyala.
                         </p>
-
-                        <!-- Countdown number -->
                         <div class="wait-secs" id="waitSecs">30</div>
-
-                        <!-- Progress bar -->
                         <div class="wait-bar-wrap">
                             <div class="wait-bar-label">
                                 <span>Mendeteksi otomatis…</span>
@@ -578,7 +674,6 @@
                                 <div class="wait-bar-fill" id="waitBarFill"></div>
                             </div>
                         </div>
-
                         <button class="wait-cancel" onclick="cancelWaiting()">Batalkan & kembali</button>
                     </div>
                 </div>
@@ -627,7 +722,6 @@
                     </div>
 
                     <div class="cta-group">
-                        <!-- Launch button: klik → buka protocol + mulai waiting state -->
                         <a href="counter-eeta://launch" class="btn btn-primary" id="launchBtn"
                            onclick="onLaunchClick(event)">
                             🚀 &nbsp;Buka Aplikasi COUNTER EETA
@@ -681,7 +775,7 @@
 
                     <div class="download-strip">
                         <div class="download-info">
-                            <div class="download-title">Download COUNTER EETA</div>
+                            <div class="download-title">Download COUNTER EETA v0.3.0</div>
                             <div class="download-meta">~50 MB &nbsp;·&nbsp; Windows 10/11 &nbsp;·&nbsp; Gratis</div>
                         </div>
                         <a href="https://github.com/lkpdeetaprovinsibali-lab/COUNTER-EETA-LANDING/releases"
@@ -777,24 +871,51 @@
 
     <script>
     /* =========================================================
+       UPDATE BANNER
+       Naikkan BANNER_VERSION setiap rilis baru agar banner
+       muncul lagi untuk user yang sudah dismiss sebelumnya.
+    ========================================================= */
+    const BANNER_VERSION = 'v0.3.0';
+    const BANNER_KEY     = `ce_banner_dismissed_${BANNER_VERSION}`;
+
+    function initBanner() {
+        const dismissed = localStorage.getItem(BANNER_KEY);
+        if (dismissed) {
+            document.getElementById('updateBanner').classList.add('hidden');
+        }
+    }
+
+    function dismissBanner() {
+        localStorage.setItem(BANNER_KEY, '1');
+        const banner = document.getElementById('updateBanner');
+        banner.style.transition = 'opacity .3s ease, transform .3s ease, max-height .4s ease';
+        banner.style.opacity    = '0';
+        banner.style.transform  = 'translateY(-8px)';
+        banner.style.maxHeight  = banner.offsetHeight + 'px';
+        setTimeout(() => { banner.style.maxHeight = '0'; }, 50);
+        setTimeout(() => { banner.classList.add('hidden'); }, 400);
+    }
+
+    // Run on load
+    initBanner();
+
+    /* =========================================================
        CONSTANTS
     ========================================================= */
     const APP_URL         = 'http://127.0.0.1:5000';
-    const CHECK_TIMEOUT   = 3000;   // ms tiap fetch app check
-    const REDIRECT_DELAY  = 3;      // detik countdown setelah terdeteksi
-    const WAIT_DURATION   = 30;     // detik menunggu setelah klik launch
+    const CHECK_TIMEOUT   = 3000;
+    const REDIRECT_DELAY  = 3;
+    const WAIT_DURATION   = 30;
 
     /* =========================================================
        STATE
     ========================================================= */
-    let countdownValue  = REDIRECT_DELAY;
-    let countdownTimer  = null;
-    let heartbeatTimer  = null;
-
-    // Waiting state
-    let waitSecsLeft    = WAIT_DURATION;
-    let waitBarTimer    = null;   // interval tick tiap detik
-    let waitPollTimer   = null;   // interval poll app tiap 2 detik
+    let countdownValue = REDIRECT_DELAY;
+    let countdownTimer = null;
+    let heartbeatTimer = null;
+    let waitSecsLeft   = WAIT_DURATION;
+    let waitBarTimer   = null;
+    let waitPollTimer  = null;
 
     /* =========================================================
        THEME
@@ -834,7 +955,7 @@
     function startCountdown() {
         const numEl = document.getElementById('countdown');
         const arc   = document.getElementById('countdownArc');
-        const circ  = 201; // 2π×32
+        const circ  = 201;
         countdownValue = REDIRECT_DELAY;
         numEl.textContent = countdownValue;
         arc.style.strokeDashoffset = 0;
@@ -858,12 +979,10 @@
        LAUNCH BUTTON → WAITING STATE
     ========================================================= */
     function onLaunchClick(e) {
-        // Biarkan href bekerja (buka counter-eeta://launch)
-        // Lalu tampilkan waiting state
         setTimeout(() => {
             showState('waitingState');
             startWaiting();
-        }, 300); // sedikit delay agar browser sempat membuka dialog
+        }, 300);
     }
 
     /* =========================================================
@@ -873,19 +992,15 @@
         waitSecsLeft = WAIT_DURATION;
         updateWaitUI();
 
-        // Tick tiap detik — update countdown & progress bar
         waitBarTimer = setInterval(() => {
             waitSecsLeft--;
             updateWaitUI();
-
             if (waitSecsLeft <= 0) {
                 stopWaiting();
-                // Waktu habis, belum terdeteksi → kembali ke notRunning
                 showState('notRunningState');
             }
         }, 1000);
 
-        // Poll aplikasi tiap 2 detik
         waitPollTimer = setInterval(async () => {
             const running = await checkAppRunning();
             if (running) {
@@ -905,16 +1020,11 @@
     }
 
     function stopWaiting() {
-        clearInterval(waitBarTimer);
-        clearInterval(waitPollTimer);
-        waitBarTimer = null;
-        waitPollTimer = null;
+        clearInterval(waitBarTimer); clearInterval(waitPollTimer);
+        waitBarTimer = null; waitPollTimer = null;
     }
 
-    function cancelWaiting() {
-        stopWaiting();
-        showState('notRunningState');
-    }
+    function cancelWaiting() { stopWaiting(); showState('notRunningState'); }
 
     /* =========================================================
        COLLAPSE
@@ -937,7 +1047,7 @@
     window.addEventListener('beforeunload', () => clearInterval(heartbeatTimer));
 
     /* =========================================================
-       INIT — cek langsung saat halaman dimuat
+       INIT
     ========================================================= */
     async function init() {
         const running = await checkAppRunning();
@@ -954,4 +1064,3 @@
     </script>
 </body>
 </html>
-
