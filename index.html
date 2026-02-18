@@ -7,7 +7,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
-        /* ===== DESIGN TOKENS (mirroring provided CSS) ===== */
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
@@ -34,18 +33,13 @@
             --font-primary: 'Plus Jakarta Sans', 'Segoe UI', system-ui, sans-serif;
             --font-mono:    'DM Mono', 'Courier New', monospace;
 
-            --spacing-xs:  0.25rem;
-            --spacing-sm:  0.5rem;
-            --spacing-md:  0.75rem;
-            --spacing-lg:  1rem;
-            --spacing-xl:  1.5rem;
-            --spacing-2xl: 2rem;
+            --spacing-xs:  0.25rem; --spacing-sm:  0.5rem;
+            --spacing-md:  0.75rem; --spacing-lg:  1rem;
+            --spacing-xl:  1.5rem;  --spacing-2xl: 2rem;
             --spacing-3xl: 3rem;
 
-            --radius-sm: 0.25rem;
-            --radius-md: 0.375rem;
-            --radius-lg: 0.5rem;
-            --radius-xl: 0.75rem;
+            --radius-sm: 0.25rem; --radius-md: 0.375rem;
+            --radius-lg: 0.5rem;  --radius-xl: 0.75rem;
 
             --shadow-xs: 0 1px 2px 0 rgba(0,0,0,.05);
             --shadow-sm: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
@@ -74,9 +68,7 @@
             --shadow-xl: 0 20px 25px -5px rgba(0,0,0,.6), 0 10px 10px -5px rgba(0,0,0,.5);
         }
 
-        /* ===== BASE ===== */
         html { scroll-behavior: smooth; }
-
         body {
             font-family: var(--font-primary);
             background-color: var(--color-bg);
@@ -86,7 +78,6 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* ===== BACKGROUND (from provided CSS) ===== */
         .bg-gradient {
             position: fixed; inset: 0;
             background:
@@ -113,7 +104,6 @@
                 linear-gradient(90deg, rgba(148,163,184,.03) 1px, transparent 1px);
         }
 
-        /* ===== HEADER (exact match to provided CSS) ===== */
         .header {
             position: sticky; top: 0; z-index: 100;
             padding: var(--spacing-lg) 0;
@@ -122,11 +112,7 @@
             box-shadow: var(--shadow-sm);
             backdrop-filter: blur(10px);
         }
-        .header .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+        .header .container { display: flex; justify-content: space-between; align-items: center; }
         .logo { display: flex; align-items: center; gap: var(--spacing-lg); }
         .logo-icon {
             width: 52px; height: 52px;
@@ -135,19 +121,13 @@
             display: flex; align-items: center; justify-content: center;
             color: white; box-shadow: var(--shadow-md);
             font-size: 1.25rem; font-weight: 800;
-            font-family: var(--font-mono);
-            letter-spacing: -0.05em;
+            font-family: var(--font-mono); letter-spacing: -0.05em;
         }
         .logo-text { display: flex; flex-direction: column; line-height: 1.2; }
-        .logo-title {
-            font-size: 1.375rem; font-weight: 700;
-            color: var(--color-primary); letter-spacing: -0.025em;
-        }
+        .logo-title { font-size: 1.375rem; font-weight: 700; color: var(--color-primary); letter-spacing: -0.025em; }
         [data-theme="dark"] .logo-title { color: var(--color-primary-light); }
         .logo-subtitle { font-size: 0.8125rem; color: var(--color-text-secondary); font-weight: 500; }
-
         .header-info { display: flex; align-items: center; gap: var(--spacing-md); }
-
         .badge {
             padding: 0.375rem 0.875rem;
             background: var(--color-primary); color: white;
@@ -155,33 +135,23 @@
             font-size: 0.75rem; font-weight: 600; letter-spacing: 0.025em;
             box-shadow: var(--shadow-xs);
         }
-
         .theme-toggle {
             width: 40px; height: 40px;
-            border: 1px solid var(--color-border);
-            background: var(--color-surface);
+            border: 1px solid var(--color-border); background: var(--color-surface);
             border-radius: var(--radius-md);
             display: flex; align-items: center; justify-content: center;
-            cursor: pointer; transition: all var(--transition-base);
-            font-size: 1.1rem;
+            cursor: pointer; transition: all var(--transition-base); font-size: 1.1rem;
         }
-        .theme-toggle:hover {
-            background: var(--color-surface-alt);
-            border-color: var(--color-primary);
-        }
+        .theme-toggle:hover { background: var(--color-surface-alt); border-color: var(--color-primary); }
 
-        /* ===== CONTAINER ===== */
         .container { max-width: 780px; margin: 0 auto; padding: 0 var(--spacing-xl); }
         .container-wide { max-width: 1100px; margin: 0 auto; padding: 0 var(--spacing-xl); }
 
-        /* ===== MAIN ===== */
         .main-content { position: relative; z-index: 2; padding: var(--spacing-3xl) 0 var(--spacing-2xl); }
 
-        /* ===== STATES ===== */
         .state { display: none; }
         .state.active { display: block; }
 
-        /* ===== CARD ===== */
         .card {
             background: var(--color-surface);
             border: 1px solid var(--color-border);
@@ -191,12 +161,11 @@
             animation: fadeInUp 0.5s ease-out both;
         }
 
-        /* ===== LOADING STATE ===== */
+        /* ── LOADING STATE (initial check) ── */
         #loadingState .card-inner {
             display: flex; flex-direction: column;
             align-items: center; gap: var(--spacing-xl);
-            padding: var(--spacing-2xl) 0;
-            text-align: center;
+            padding: var(--spacing-2xl) 0; text-align: center;
         }
         .loading-spinner {
             width: 52px; height: 52px;
@@ -205,19 +174,88 @@
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
         }
-        .loading-label {
-            font-size: 1rem; font-weight: 600; color: var(--color-text);
-        }
-        .loading-sub {
-            font-size: 0.875rem; color: var(--color-text-muted); margin-top: -var(--spacing-sm);
+        .loading-label { font-size: 1rem; font-weight: 600; color: var(--color-text); }
+        .loading-sub   { font-size: 0.875rem; color: var(--color-text-muted); }
+
+        /* ── WAITING STATE (after launch click, 30s) ── */
+        #waitingState .card-inner {
+            display: flex; flex-direction: column;
+            align-items: center; gap: var(--spacing-xl);
+            padding: var(--spacing-2xl) 0; text-align: center;
         }
 
-        /* ===== SUCCESS STATE ===== */
+        /* Animated orbit/radar for waiting */
+        .radar-wrap {
+            position: relative;
+            width: 100px; height: 100px;
+        }
+        .radar-ring {
+            position: absolute; inset: 0;
+            border-radius: 50%;
+            border: 2px solid var(--color-primary);
+            opacity: 0;
+            animation: radarPulse 2s ease-out infinite;
+        }
+        .radar-ring:nth-child(2) { animation-delay: 0.66s; }
+        .radar-ring:nth-child(3) { animation-delay: 1.33s; }
+        .radar-core {
+            position: absolute; inset: 0;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .radar-dot {
+            width: 40px; height: 40px;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.25rem;
+            box-shadow: var(--shadow-md);
+        }
+
+        .waiting-label { font-size: 1.125rem; font-weight: 700; color: var(--color-text); }
+        .waiting-sub   { font-size: 0.875rem; color: var(--color-text-muted); max-width: 340px; line-height: 1.6; }
+
+        /* Countdown bar */
+        .wait-bar-wrap {
+            width: 100%; max-width: 320px;
+        }
+        .wait-bar-label {
+            display: flex; justify-content: space-between;
+            font-size: 0.8rem; color: var(--color-text-muted);
+            margin-bottom: var(--spacing-xs);
+        }
+        .wait-bar-track {
+            height: 6px; background: var(--color-border);
+            border-radius: 3px; overflow: hidden;
+        }
+        .wait-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--color-primary), var(--color-primary-light));
+            border-radius: 3px;
+            width: 100%;
+            transition: width 1s linear;
+        }
+        .wait-secs {
+            font-size: 2.25rem; font-weight: 800;
+            font-family: var(--font-mono);
+            color: var(--color-primary);
+            letter-spacing: -0.04em;
+        }
+        [data-theme="dark"] .wait-secs { color: var(--color-primary-light); }
+
+        .wait-cancel {
+            background: none; border: none;
+            font-size: 0.8125rem; color: var(--color-text-muted);
+            cursor: pointer; font-family: var(--font-primary);
+            text-decoration: underline; padding: 0;
+            transition: color var(--transition-fast);
+        }
+        .wait-cancel:hover { color: var(--color-danger); }
+
+        /* ── SUCCESS STATE ── */
         #successState .card-inner {
             display: flex; flex-direction: column;
             align-items: center; gap: var(--spacing-xl);
-            padding: var(--spacing-2xl) 0;
-            text-align: center;
+            padding: var(--spacing-2xl) 0; text-align: center;
         }
         .check-ring {
             width: 80px; height: 80px;
@@ -228,151 +266,101 @@
             font-size: 2rem;
             animation: scaleIn 0.4s cubic-bezier(.34,1.56,.64,1) both;
         }
-        .success-label {
-            font-size: 1.375rem; font-weight: 700; color: var(--color-text);
-        }
-        .countdown-ring {
-            position: relative;
-            width: 72px; height: 72px;
-        }
+        .success-label { font-size: 1.375rem; font-weight: 700; color: var(--color-text); }
+        .countdown-ring { position: relative; width: 72px; height: 72px; }
         .countdown-num {
             position: absolute; inset: 0;
             display: flex; align-items: center; justify-content: center;
             font-size: 2rem; font-weight: 700;
-            font-family: var(--font-mono);
-            color: var(--color-primary);
+            font-family: var(--font-mono); color: var(--color-primary);
         }
         .countdown-svg { transform: rotate(-90deg); }
         .countdown-track { fill: none; stroke: var(--color-border); stroke-width: 4; }
-        .countdown-arc  { fill: none; stroke: var(--color-primary); stroke-width: 4; stroke-linecap: round; stroke-dasharray: 201; stroke-dashoffset: 0; transition: stroke-dashoffset 1s linear; }
+        .countdown-arc  {
+            fill: none; stroke: var(--color-primary); stroke-width: 4;
+            stroke-linecap: round; stroke-dasharray: 201; stroke-dashoffset: 0;
+            transition: stroke-dashoffset 1s linear;
+        }
         .redirect-sub { font-size: 0.9rem; color: var(--color-text-muted); }
 
-        /* ===== MAIN STATE (not running) ===== */
-
-        /* Section heading */
+        /* ── NOT RUNNING STATE ── */
         .section-eyebrow {
             display: inline-flex; align-items: center; gap: var(--spacing-sm);
-            font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em;
-            text-transform: uppercase; color: var(--color-primary);
-            background: rgba(30,58,138,.07);
+            font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+            color: var(--color-primary); background: rgba(30,58,138,.07);
             border: 1px solid rgba(30,58,138,.15);
-            border-radius: var(--radius-md);
-            padding: 0.25rem 0.75rem;
+            border-radius: var(--radius-md); padding: 0.25rem 0.75rem;
             margin-bottom: var(--spacing-lg);
         }
-        [data-theme="dark"] .section-eyebrow {
-            background: rgba(59,130,246,.12);
-            border-color: rgba(59,130,246,.25);
-            color: var(--color-primary-light);
-        }
+        [data-theme="dark"] .section-eyebrow { background: rgba(59,130,246,.12); border-color: rgba(59,130,246,.25); color: var(--color-primary-light); }
 
         .hero {
-            text-align: center;
-            margin-bottom: var(--spacing-3xl);
+            text-align: center; margin-bottom: var(--spacing-3xl);
             animation: fadeInUp 0.5s ease-out both;
         }
         .hero-title {
             font-size: clamp(1.75rem, 4vw, 2.5rem);
-            font-weight: 800; line-height: 1.15;
-            letter-spacing: -0.03em;
+            font-weight: 800; line-height: 1.15; letter-spacing: -0.03em;
             margin-bottom: var(--spacing-lg);
         }
         .title-main { display: block; color: var(--color-text); }
         .title-accent {
             display: block;
             background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            background-clip: text;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
         }
-        .hero-desc {
-            font-size: 0.9375rem; color: var(--color-text-secondary);
-            max-width: 520px; margin: 0 auto;
-            line-height: 1.7;
-        }
+        .hero-desc { font-size: 0.9375rem; color: var(--color-text-secondary); max-width: 520px; margin: 0 auto; line-height: 1.7; }
 
-        /* Status bar */
         .status-bar {
-            display: flex; align-items: center;
-            gap: var(--spacing-sm);
+            display: flex; align-items: center; gap: var(--spacing-sm);
             padding: var(--spacing-md) var(--spacing-lg);
             background: rgba(220, 38, 38, .06);
             border: 1px solid rgba(220, 38, 38, .2);
             border-radius: var(--radius-lg);
-            font-size: 0.875rem; font-weight: 500;
-            color: var(--color-danger);
+            font-size: 0.875rem; font-weight: 500; color: var(--color-danger);
             margin-bottom: var(--spacing-xl);
         }
         .status-dot {
             width: 8px; height: 8px; border-radius: 50%;
-            background: var(--color-danger);
-            flex-shrink: 0;
+            background: var(--color-danger); flex-shrink: 0;
             animation: pulse 2s ease infinite;
         }
 
-        /* CTA Buttons */
         .btn {
             display: inline-flex; align-items: center; justify-content: center;
-            gap: var(--spacing-sm);
-            padding: 0.6875rem 1.5rem;
+            gap: var(--spacing-sm); padding: 0.6875rem 1.5rem;
             border-radius: var(--radius-lg);
             font-weight: 600; font-size: 0.9375rem;
             border: none; cursor: pointer;
             transition: all var(--transition-base);
-            text-decoration: none;
-            font-family: var(--font-primary);
-            white-space: nowrap;
+            text-decoration: none; font-family: var(--font-primary); white-space: nowrap;
         }
         .btn-primary {
             background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
-            color: white; width: 100%;
-            padding: 0.9375rem; font-size: 1rem;
+            color: white; width: 100%; padding: 0.9375rem; font-size: 1rem;
             box-shadow: var(--shadow-md);
         }
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
-        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
         .btn-primary:active { transform: translateY(0); }
-
         .btn-outline {
-            background: var(--color-surface);
-            color: var(--color-text);
-            border: 1px solid var(--color-border);
-            width: 100%;
-            padding: 0.9375rem; font-size: 1rem;
-            box-shadow: var(--shadow-xs);
+            background: var(--color-surface); color: var(--color-text);
+            border: 1px solid var(--color-border); width: 100%;
+            padding: 0.9375rem; font-size: 1rem; box-shadow: var(--shadow-xs);
         }
-        .btn-outline:hover {
-            background: var(--color-surface-alt);
-            border-color: var(--color-primary);
-            transform: translateY(-1px);
-            box-shadow: var(--shadow-sm);
-        }
-
+        .btn-outline:hover { background: var(--color-surface-alt); border-color: var(--color-primary); transform: translateY(-1px); box-shadow: var(--shadow-sm); }
         .btn-success {
             background: var(--color-success); color: white;
-            width: 100%; padding: 0.9375rem; font-size: 1rem;
-            box-shadow: var(--shadow-sm);
+            width: 100%; padding: 0.9375rem; font-size: 1rem; box-shadow: var(--shadow-sm);
         }
         .btn-success:hover { background: #047857; transform: translateY(-2px); box-shadow: var(--shadow-md); }
+        .btn-sm { padding: 0.5rem 1.125rem; font-size: 0.875rem; width: auto; }
 
-        .btn-sm {
-            padding: 0.5rem 1.125rem;
-            font-size: 0.875rem; width: auto;
-        }
+        .cta-group { display: flex; flex-direction: column; gap: var(--spacing-md); margin-bottom: var(--spacing-2xl); }
 
-        .cta-group {
-            display: flex; flex-direction: column;
-            gap: var(--spacing-md);
-            margin-bottom: var(--spacing-2xl);
-        }
-
-        /* After-launch hint */
         .hint-box {
             display: flex; gap: var(--spacing-md);
             padding: var(--spacing-lg);
-            background: rgba(5,150,105,.06);
-            border: 1px solid rgba(5,150,105,.2);
+            background: rgba(5,150,105,.06); border: 1px solid rgba(5,150,105,.2);
             border-radius: var(--radius-lg);
             font-size: 0.875rem; color: var(--color-text-secondary);
             margin-bottom: var(--spacing-2xl);
@@ -380,185 +368,120 @@
         .hint-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
         .hint-box strong { color: var(--color-text); }
 
-        /* Divider */
         .divider {
             display: flex; align-items: center; gap: var(--spacing-lg);
             margin: var(--spacing-2xl) 0;
-            color: var(--color-text-muted);
-            font-size: 0.75rem; font-weight: 600;
+            color: var(--color-text-muted); font-size: 0.75rem; font-weight: 600;
             text-transform: uppercase; letter-spacing: 0.06em;
         }
-        .divider::before, .divider::after {
-            content: ''; flex: 1; height: 1px;
-            background: var(--color-border);
-        }
+        .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--color-border); }
 
-        /* Feature grid */
-        .feature-grid {
-            display: grid; grid-template-columns: 1fr 1fr;
-            gap: var(--spacing-md);
-            margin-bottom: var(--spacing-2xl);
-        }
+        .feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-md); margin-bottom: var(--spacing-2xl); }
         .feat {
-            display: flex; align-items: flex-start;
-            gap: var(--spacing-md);
+            display: flex; align-items: flex-start; gap: var(--spacing-md);
             padding: var(--spacing-lg);
-            background: var(--color-surface-alt);
-            border: 1px solid var(--color-border);
-            border-radius: var(--radius-lg);
-            transition: all var(--transition-base);
+            background: var(--color-surface-alt); border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg); transition: all var(--transition-base);
         }
         .feat:hover { border-color: var(--color-primary); box-shadow: var(--shadow-sm); }
         .feat-icon {
             width: 36px; height: 36px; flex-shrink: 0;
-            background: rgba(30,58,138,.08);
-            border-radius: var(--radius-md);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1rem;
+            background: rgba(30,58,138,.08); border-radius: var(--radius-md);
+            display: flex; align-items: center; justify-content: center; font-size: 1rem;
         }
         [data-theme="dark"] .feat-icon { background: rgba(59,130,246,.12); }
         .feat-title { font-size: 0.875rem; font-weight: 600; color: var(--color-text); margin-bottom: 2px; }
         .feat-desc  { font-size: 0.8125rem; color: var(--color-text-muted); line-height: 1.5; }
 
-        /* Download strip */
         .download-strip {
             display: flex; align-items: center; justify-content: space-between;
-            gap: var(--spacing-lg);
-            padding: var(--spacing-xl);
+            gap: var(--spacing-lg); padding: var(--spacing-xl);
             background: linear-gradient(135deg, rgba(30,58,138,.05), rgba(217,119,6,.04));
             border: 1px solid var(--color-border);
-            border-radius: var(--radius-lg);
-            margin-bottom: var(--spacing-xl);
+            border-radius: var(--radius-lg); margin-bottom: var(--spacing-xl);
         }
         .download-info { flex: 1; min-width: 0; }
         .download-title { font-size: 0.9375rem; font-weight: 700; color: var(--color-text); margin-bottom: 2px; }
-        .download-meta { font-size: 0.8125rem; color: var(--color-text-muted); }
+        .download-meta  { font-size: 0.8125rem; color: var(--color-text-muted); }
         .btn-accent {
             background: var(--color-accent); color: white;
             padding: 0.6875rem 1.25rem; font-size: 0.9375rem;
-            white-space: nowrap; flex-shrink: 0;
-            box-shadow: var(--shadow-sm);
-            border: none; cursor: pointer;
-            border-radius: var(--radius-lg);
+            white-space: nowrap; flex-shrink: 0; box-shadow: var(--shadow-sm);
+            border: none; cursor: pointer; border-radius: var(--radius-lg);
             font-weight: 600; font-family: var(--font-primary);
             display: inline-flex; align-items: center; gap: var(--spacing-sm);
-            text-decoration: none;
-            transition: all var(--transition-base);
+            text-decoration: none; transition: all var(--transition-base);
         }
         .btn-accent:hover { background: #b45309; transform: translateY(-2px); box-shadow: var(--shadow-md); }
 
-        /* Collapsible troubleshoot */
         .collapse-trigger {
             display: flex; align-items: center; justify-content: space-between;
             padding: var(--spacing-lg);
-            background: var(--color-surface-alt);
-            border: 1px solid var(--color-border);
-            border-radius: var(--radius-lg);
-            cursor: pointer;
-            font-weight: 600; font-size: 0.9rem;
-            color: var(--color-text-secondary);
-            transition: all var(--transition-base);
-            user-select: none;
+            background: var(--color-surface-alt); border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg); cursor: pointer;
+            font-weight: 600; font-size: 0.9rem; color: var(--color-text-secondary);
+            transition: all var(--transition-base); user-select: none;
         }
         .collapse-trigger:hover { border-color: var(--color-primary); color: var(--color-text); }
         .collapse-arrow { font-size: 0.875rem; transition: transform var(--transition-base); }
         .collapse-arrow.open { transform: rotate(180deg); }
-        .collapse-body {
-            overflow: hidden; max-height: 0;
-            transition: max-height 0.35s ease;
-        }
+        .collapse-body { overflow: hidden; max-height: 0; transition: max-height 0.35s ease; }
         .collapse-body.open { max-height: 1200px; }
-        .collapse-inner {
-            padding-top: var(--spacing-lg);
-            display: flex; flex-direction: column; gap: var(--spacing-md);
-        }
+        .collapse-inner { padding-top: var(--spacing-lg); display: flex; flex-direction: column; gap: var(--spacing-md); }
 
-        /* Steps list */
         .steps-list { display: flex; flex-direction: column; gap: var(--spacing-md); }
         .step-item {
             display: flex; align-items: flex-start; gap: var(--spacing-lg);
             padding: var(--spacing-lg);
-            background: var(--color-surface);
-            border: 1px solid var(--color-border);
+            background: var(--color-surface); border: 1px solid var(--color-border);
             border-radius: var(--radius-lg);
         }
         .step-num {
             width: 32px; height: 32px; flex-shrink: 0;
             background: var(--color-primary); color: white;
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-weight: 700; font-size: 0.875rem;
-            font-family: var(--font-mono);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 0.875rem; font-family: var(--font-mono);
         }
         .step-title { font-weight: 600; font-size: 0.9rem; color: var(--color-text); margin-bottom: 2px; }
         .step-desc  { font-size: 0.8125rem; color: var(--color-text-muted); line-height: 1.5; }
 
         .info-note {
-            display: flex; gap: var(--spacing-md);
-            padding: var(--spacing-lg);
-            background: rgba(30,58,138,.05);
-            border: 1px solid rgba(30,58,138,.15);
-            border-radius: var(--radius-lg);
-            font-size: 0.875rem; color: var(--color-text-secondary);
-            line-height: 1.6;
+            display: flex; gap: var(--spacing-md); padding: var(--spacing-lg);
+            background: rgba(30,58,138,.05); border: 1px solid rgba(30,58,138,.15);
+            border-radius: var(--radius-lg); font-size: 0.875rem;
+            color: var(--color-text-secondary); line-height: 1.6;
         }
-        [data-theme="dark"] .info-note {
-            background: rgba(59,130,246,.08);
-            border-color: rgba(59,130,246,.2);
-        }
+        [data-theme="dark"] .info-note { background: rgba(59,130,246,.08); border-color: rgba(59,130,246,.2); }
         .info-note-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
 
-        /* ===== HOW IT WORKS ===== */
         .how-card {
-            background: var(--color-surface);
-            border: 1px solid var(--color-border);
-            border-radius: var(--radius-xl);
-            padding: var(--spacing-2xl);
-            box-shadow: var(--shadow-sm);
-            margin-top: var(--spacing-xl);
+            background: var(--color-surface); border: 1px solid var(--color-border);
+            border-radius: var(--radius-xl); padding: var(--spacing-2xl);
+            box-shadow: var(--shadow-sm); margin-top: var(--spacing-xl);
             animation: fadeInUp 0.5s ease-out 0.15s both;
         }
-        .how-card h3 {
-            font-size: 1.125rem; font-weight: 700;
-            margin-bottom: var(--spacing-xl);
-            color: var(--color-text);
-        }
-        .how-grid {
-            display: grid; grid-template-columns: 1fr 1fr;
-            gap: var(--spacing-md);
-        }
+        .how-card h3 { font-size: 1.125rem; font-weight: 700; margin-bottom: var(--spacing-xl); color: var(--color-text); }
+        .how-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-md); }
         .how-item {
             padding: var(--spacing-lg);
-            background: var(--color-surface-alt);
-            border: 1px solid var(--color-border);
+            background: var(--color-surface-alt); border: 1px solid var(--color-border);
             border-radius: var(--radius-lg);
         }
         .how-item-head {
             display: flex; align-items: center; gap: var(--spacing-sm);
-            font-weight: 600; font-size: 0.875rem;
-            color: var(--color-primary); margin-bottom: var(--spacing-sm);
+            font-weight: 600; font-size: 0.875rem; color: var(--color-primary);
+            margin-bottom: var(--spacing-sm);
         }
         [data-theme="dark"] .how-item-head { color: var(--color-primary-light); }
         .how-item p { font-size: 0.8125rem; color: var(--color-text-muted); line-height: 1.6; }
 
-        /* ===== FOOTER (match provided CSS) ===== */
         .footer {
             position: relative; z-index: 10;
-            padding: var(--spacing-2xl) 0;
-            margin-top: var(--spacing-3xl);
-            background: var(--color-surface);
-            border-top: 2px solid var(--color-primary);
+            padding: var(--spacing-2xl) 0; margin-top: var(--spacing-3xl);
+            background: var(--color-surface); border-top: 2px solid var(--color-primary);
         }
-        .footer-content {
-            display: flex; flex-direction: column;
-            align-items: center; gap: var(--spacing-lg);
-            text-align: center;
-        }
-        .footer-brand strong {
-            font-size: 1.125rem; color: var(--color-primary);
-            font-weight: 700; letter-spacing: -0.025em;
-            display: block;
-        }
+        .footer-content { display: flex; flex-direction: column; align-items: center; gap: var(--spacing-lg); text-align: center; }
+        .footer-brand strong { font-size: 1.125rem; color: var(--color-primary); font-weight: 700; letter-spacing: -0.025em; display: block; }
         [data-theme="dark"] .footer-brand strong { color: var(--color-primary-light); }
         .footer-brand span { font-size: 0.875rem; color: var(--color-text-secondary); font-weight: 500; }
         .footer-info { color: var(--color-text-secondary); font-size: 0.8125rem; }
@@ -566,21 +489,15 @@
         .footer-note { font-style: italic; opacity: .8; }
 
         /* ===== ANIMATIONS ===== */
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(16px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes scaleIn {
-            from { transform: scale(0.5); opacity: 0; }
-            to   { transform: scale(1);   opacity: 1; }
-        }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes scaleIn  { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
         @keyframes spin { to { transform: rotate(360deg); } }
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50%       { opacity: 0.4; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+        @keyframes radarPulse {
+            0%   { transform: scale(0.5); opacity: .8; }
+            100% { transform: scale(2);   opacity: 0; }
         }
 
-        /* ===== RESPONSIVE ===== */
         @media (max-width: 640px) {
             .card { padding: var(--spacing-xl); }
             .feature-grid { grid-template-columns: 1fr; }
@@ -594,7 +511,6 @@
     <div class="bg-gradient"></div>
     <div class="bg-grid"></div>
 
-    <!-- HEADER -->
     <header class="header">
         <div class="container-wide">
             <div class="logo">
@@ -613,11 +529,10 @@
         </div>
     </header>
 
-    <!-- MAIN -->
     <main class="main-content">
         <div class="container">
 
-            <!-- LOADING STATE -->
+            <!-- ── STATE 1: Cek awal ── -->
             <div class="state active" id="loadingState">
                 <div class="card">
                     <div class="card-inner">
@@ -630,7 +545,46 @@
                 </div>
             </div>
 
-            <!-- SUCCESS STATE -->
+            <!-- ── STATE 2: Menunggu app dibuka (30 detik) ── -->
+            <div class="state" id="waitingState">
+                <div class="card">
+                    <div class="card-inner">
+                        <!-- Radar animation -->
+                        <div class="radar-wrap">
+                            <div class="radar-ring"></div>
+                            <div class="radar-ring"></div>
+                            <div class="radar-ring"></div>
+                            <div class="radar-core">
+                                <div class="radar-dot">🔍</div>
+                            </div>
+                        </div>
+
+                        <div class="waiting-label">Menunggu Aplikasi Dibuka…</div>
+                        <p class="waiting-sub">
+                            Silakan klik <strong>"Open"</strong> atau <strong>"Buka"</strong> pada dialog browser,
+                            lalu tunggu aplikasi menyala.
+                        </p>
+
+                        <!-- Countdown number -->
+                        <div class="wait-secs" id="waitSecs">30</div>
+
+                        <!-- Progress bar -->
+                        <div class="wait-bar-wrap">
+                            <div class="wait-bar-label">
+                                <span>Mendeteksi otomatis…</span>
+                                <span id="waitBarPct">100%</span>
+                            </div>
+                            <div class="wait-bar-track">
+                                <div class="wait-bar-fill" id="waitBarFill"></div>
+                            </div>
+                        </div>
+
+                        <button class="wait-cancel" onclick="cancelWaiting()">Batalkan & kembali</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── STATE 3: Aplikasi terdeteksi ── -->
             <div class="state" id="successState">
                 <div class="card">
                     <div class="card-inner">
@@ -649,10 +603,9 @@
                 </div>
             </div>
 
-            <!-- NOT RUNNING STATE -->
+            <!-- ── STATE 4: Aplikasi belum berjalan ── -->
             <div class="state" id="notRunningState">
 
-                <!-- Hero -->
                 <div class="hero">
                     <div style="display:flex;justify-content:center;margin-bottom:var(--spacing-lg)">
                         <span class="section-eyebrow">Sistem Pembantu Penyusunan Laporan Keuangan Pemerintah Daerah</span>
@@ -667,18 +620,16 @@
                     </p>
                 </div>
 
-                <!-- Card utama -->
                 <div class="card">
-
-                    <!-- Status -->
                     <div class="status-bar">
                         <div class="status-dot"></div>
                         Aplikasi belum berjalan di komputer ini
                     </div>
 
-                    <!-- CTA -->
                     <div class="cta-group">
-                        <a href="counter-eeta://launch" class="btn btn-primary" id="launchBtn">
+                        <!-- Launch button: klik → buka protocol + mulai waiting state -->
+                        <a href="counter-eeta://launch" class="btn btn-primary" id="launchBtn"
+                           onclick="onLaunchClick(event)">
                             🚀 &nbsp;Buka Aplikasi COUNTER EETA
                         </a>
                         <button class="btn btn-outline" onclick="reloadPage()">
@@ -686,20 +637,17 @@
                         </button>
                     </div>
 
-                    <!-- After-launch hint -->
                     <div class="hint-box">
                         <span class="hint-icon">💡</span>
                         <div>
                             Setelah klik tombol di atas, browser akan meminta konfirmasi —
                             klik <strong>"Open"</strong> atau <strong>"Buka"</strong>.
-                            Halaman ini otomatis refresh dalam 5 detik untuk mendeteksi aplikasi.
+                            Halaman ini otomatis mendeteksi selama <strong>30 detik</strong>.
                         </div>
                     </div>
 
-                    <!-- Divider -->
                     <div class="divider">Belum punya aplikasinya?</div>
 
-                    <!-- Features -->
                     <div class="feature-grid">
                         <div class="feat">
                             <div class="feat-icon">⚡</div>
@@ -731,7 +679,6 @@
                         </div>
                     </div>
 
-                    <!-- Download -->
                     <div class="download-strip">
                         <div class="download-info">
                             <div class="download-title">Download COUNTER EETA</div>
@@ -743,7 +690,6 @@
                         </a>
                     </div>
 
-                    <!-- Troubleshooting collapsible -->
                     <div>
                         <div class="collapse-trigger" onclick="toggleCollapse()">
                             <span>❓ &nbsp;Tombol "Buka Aplikasi" tidak bekerja?</span>
@@ -770,7 +716,7 @@
                                         <div class="step-num">3</div>
                                         <div>
                                             <div class="step-title">Klik "Coba Lagi" di atas</div>
-                                            <div class="step-desc">Setelah app terbuka, refresh halaman ini untuk auto-redirect</div>
+                                            <div class="step-desc">Setelah app terbuka, klik refresh untuk auto-redirect</div>
                                         </div>
                                     </div>
                                 </div>
@@ -786,10 +732,8 @@
                             </div>
                         </div>
                     </div>
+                </div>
 
-                </div><!-- /card -->
-
-                <!-- How it works (secondary card) -->
                 <div class="how-card">
                     <h3>🔄 &nbsp;Bagaimana Cara Kerjanya?</h3>
                     <div class="how-grid">
@@ -813,10 +757,9 @@
                 </div>
 
             </div><!-- /notRunningState -->
-        </div><!-- /container -->
+        </div>
     </main>
 
-    <!-- FOOTER -->
     <footer class="footer">
         <div class="container-wide">
             <div class="footer-content">
@@ -833,129 +776,181 @@
     </footer>
 
     <script>
-        /* =========================================================
-           CONSTANTS
-        ========================================================= */
-        const APP_URL        = 'http://127.0.0.1:5000';
-        const CHECK_TIMEOUT  = 3000;
-        const REDIRECT_DELAY = 3;
+    /* =========================================================
+       CONSTANTS
+    ========================================================= */
+    const APP_URL         = 'http://127.0.0.1:5000';
+    const CHECK_TIMEOUT   = 3000;   // ms tiap fetch app check
+    const REDIRECT_DELAY  = 3;      // detik countdown setelah terdeteksi
+    const WAIT_DURATION   = 30;     // detik menunggu setelah klik launch
 
-        let countdownValue   = REDIRECT_DELAY;
-        let countdownTimer   = null;
-        let heartbeatTimer   = null;
+    /* =========================================================
+       STATE
+    ========================================================= */
+    let countdownValue  = REDIRECT_DELAY;
+    let countdownTimer  = null;
+    let heartbeatTimer  = null;
 
-        /* =========================================================
-           THEME TOGGLE
-        ========================================================= */
-        function toggleTheme() {
-            const root = document.documentElement;
-            const isDark = root.getAttribute('data-theme') === 'dark';
-            root.setAttribute('data-theme', isDark ? 'light' : 'dark');
-            document.getElementById('themeIcon').textContent = isDark ? '🌙' : '☀️';
+    // Waiting state
+    let waitSecsLeft    = WAIT_DURATION;
+    let waitBarTimer    = null;   // interval tick tiap detik
+    let waitPollTimer   = null;   // interval poll app tiap 2 detik
+
+    /* =========================================================
+       THEME
+    ========================================================= */
+    function toggleTheme() {
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+        document.getElementById('themeIcon').textContent = isDark ? '🌙' : '☀️';
+    }
+
+    /* =========================================================
+       STATE MANAGER
+    ========================================================= */
+    function showState(id) {
+        document.querySelectorAll('.state').forEach(s => s.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+    }
+
+    /* =========================================================
+       APP DETECTION
+    ========================================================= */
+    async function checkAppRunning() {
+        try {
+            const ctrl = new AbortController();
+            const tid  = setTimeout(() => ctrl.abort(), CHECK_TIMEOUT);
+            await fetch(APP_URL, { method: 'GET', signal: ctrl.signal, mode: 'no-cors' });
+            clearTimeout(tid);
+            return true;
+        } catch {
+            return false;
         }
+    }
 
-        /* =========================================================
-           STATE MANAGER
-        ========================================================= */
-        function showState(id) {
-            document.querySelectorAll('.state').forEach(s => s.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-        }
+    /* =========================================================
+       REDIRECT COUNTDOWN (success state)
+    ========================================================= */
+    function startCountdown() {
+        const numEl = document.getElementById('countdown');
+        const arc   = document.getElementById('countdownArc');
+        const circ  = 201; // 2π×32
+        countdownValue = REDIRECT_DELAY;
+        numEl.textContent = countdownValue;
+        arc.style.strokeDashoffset = 0;
 
-        /* =========================================================
-           APP DETECTION
-        ========================================================= */
-        async function checkAppRunning() {
-            try {
-                const ctrl = new AbortController();
-                const tid  = setTimeout(() => ctrl.abort(), CHECK_TIMEOUT);
-                await fetch(APP_URL, { method: 'GET', signal: ctrl.signal, mode: 'no-cors' });
-                clearTimeout(tid);
-                return true;
-            } catch {
-                return false;
+        countdownTimer = setInterval(() => {
+            countdownValue--;
+            numEl.textContent = countdownValue;
+            arc.style.strokeDashoffset = circ * (1 - countdownValue / REDIRECT_DELAY);
+            if (countdownValue <= 0) {
+                clearInterval(countdownTimer);
+                redirectToApp();
             }
-        }
+        }, 1000);
+    }
 
-        /* =========================================================
-           COUNTDOWN + REDIRECT
-        ========================================================= */
-        function startCountdown() {
-            const numEl = document.getElementById('countdown');
-            const arc   = document.getElementById('countdownArc');
-            const circ  = 201; // 2πr ≈ 2π×32
+    function redirectNow() { clearInterval(countdownTimer); redirectToApp(); }
+    function redirectToApp() { window.location.href = APP_URL; }
+    function reloadPage()    { window.location.reload(); }
 
-            countdownTimer = setInterval(() => {
-                countdownValue--;
-                numEl.textContent = countdownValue;
-                // shrink arc proportionally
-                arc.style.strokeDashoffset = circ * (1 - countdownValue / REDIRECT_DELAY);
-                if (countdownValue <= 0) {
-                    clearInterval(countdownTimer);
-                    redirectToApp();
-                }
-            }, 1000);
-        }
+    /* =========================================================
+       LAUNCH BUTTON → WAITING STATE
+    ========================================================= */
+    function onLaunchClick(e) {
+        // Biarkan href bekerja (buka counter-eeta://launch)
+        // Lalu tampilkan waiting state
+        setTimeout(() => {
+            showState('waitingState');
+            startWaiting();
+        }, 300); // sedikit delay agar browser sempat membuka dialog
+    }
 
-        function redirectNow() {
-            clearInterval(countdownTimer);
-            redirectToApp();
-        }
+    /* =========================================================
+       WAITING STATE — 30 detik polling
+    ========================================================= */
+    function startWaiting() {
+        waitSecsLeft = WAIT_DURATION;
+        updateWaitUI();
 
-        function redirectToApp() { window.location.href = APP_URL; }
-        function reloadPage()    { window.location.reload(); }
+        // Tick tiap detik — update countdown & progress bar
+        waitBarTimer = setInterval(() => {
+            waitSecsLeft--;
+            updateWaitUI();
 
-        /* =========================================================
-           COLLAPSE (troubleshooting)
-        ========================================================= */
-        function toggleCollapse() {
-            const body  = document.getElementById('collapseBody');
-            const arrow = document.getElementById('collapseArrow');
-            body.classList.toggle('open');
-            arrow.classList.toggle('open');
-        }
-
-        /* =========================================================
-           HEARTBEAT
-        ========================================================= */
-        function sendHeartbeat() {
-            fetch(`${APP_URL}/heartbeat`, { method: 'POST', mode: 'no-cors' }).catch(() => {});
-        }
-
-        function startHeartbeat() {
-            sendHeartbeat();
-            heartbeatTimer = setInterval(sendHeartbeat, 10_000);
-        }
-
-        window.addEventListener('beforeunload', () => clearInterval(heartbeatTimer));
-
-        /* =========================================================
-           LAUNCH BUTTON – auto-refresh after 5s
-        ========================================================= */
-        document.addEventListener('DOMContentLoaded', () => {
-            const btn = document.getElementById('launchBtn');
-            if (btn) {
-                btn.addEventListener('click', () => {
-                    setTimeout(reloadPage, 5000);
-                });
-            }
-        });
-
-        /* =========================================================
-           INIT
-        ========================================================= */
-        async function init() {
-            const running = await checkAppRunning();
-            if (running) {
-                showState('successState');
-                startCountdown();
-            } else {
+            if (waitSecsLeft <= 0) {
+                stopWaiting();
+                // Waktu habis, belum terdeteksi → kembali ke notRunning
                 showState('notRunningState');
             }
-            startHeartbeat();
-        }
+        }, 1000);
 
-        init();
+        // Poll aplikasi tiap 2 detik
+        waitPollTimer = setInterval(async () => {
+            const running = await checkAppRunning();
+            if (running) {
+                stopWaiting();
+                showState('successState');
+                startCountdown();
+                startHeartbeat();
+            }
+        }, 2000);
+    }
+
+    function updateWaitUI() {
+        const pct = (waitSecsLeft / WAIT_DURATION) * 100;
+        document.getElementById('waitSecs').textContent     = waitSecsLeft;
+        document.getElementById('waitBarFill').style.width  = pct + '%';
+        document.getElementById('waitBarPct').textContent   = Math.round(pct) + '%';
+    }
+
+    function stopWaiting() {
+        clearInterval(waitBarTimer);
+        clearInterval(waitPollTimer);
+        waitBarTimer = null;
+        waitPollTimer = null;
+    }
+
+    function cancelWaiting() {
+        stopWaiting();
+        showState('notRunningState');
+    }
+
+    /* =========================================================
+       COLLAPSE
+    ========================================================= */
+    function toggleCollapse() {
+        document.getElementById('collapseBody').classList.toggle('open');
+        document.getElementById('collapseArrow').classList.toggle('open');
+    }
+
+    /* =========================================================
+       HEARTBEAT (setelah app terdeteksi)
+    ========================================================= */
+    function sendHeartbeat() {
+        fetch(`${APP_URL}/heartbeat`, { method: 'POST', mode: 'no-cors' }).catch(() => {});
+    }
+    function startHeartbeat() {
+        sendHeartbeat();
+        heartbeatTimer = setInterval(sendHeartbeat, 10_000);
+    }
+    window.addEventListener('beforeunload', () => clearInterval(heartbeatTimer));
+
+    /* =========================================================
+       INIT — cek langsung saat halaman dimuat
+    ========================================================= */
+    async function init() {
+        const running = await checkAppRunning();
+        if (running) {
+            showState('successState');
+            startCountdown();
+            startHeartbeat();
+        } else {
+            showState('notRunningState');
+        }
+    }
+
+    init();
     </script>
 </body>
 </html>
