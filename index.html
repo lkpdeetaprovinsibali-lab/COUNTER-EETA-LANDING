@@ -114,14 +114,12 @@
             overflow: hidden;
             animation: bannerSlide .4s ease both;
         }
-        .update-banner.hidden {
-            display: none;
-        }
+        .update-banner.hidden { display: none; }
+
         @keyframes bannerSlide {
             from { transform: translateY(-100%); opacity: 0; }
             to   { transform: translateY(0);     opacity: 1; }
         }
-        /* subtle moving shimmer */
         .update-banner::before {
             content: '';
             position: absolute; inset: 0;
@@ -139,14 +137,16 @@
             to   { background-position: -200% center; }
         }
 
+        /* ── FIXED: Banner inner layout ── */
         .update-banner-inner {
-            max-width: 1100px; margin: 0 auto; padding: 0 var(--spacing-xl);
-            display: flex; align-items: center; gap: var(--spacing-lg);
-            min-height: 48px;
+            max-width: 1100px; margin: 0 auto;
+            padding: 8px var(--spacing-xl);
+            display: flex; align-items: center; gap: var(--spacing-md);
+            min-height: 44px;
             position: relative; z-index: 1;
+            flex-wrap: nowrap;
         }
 
-        /* New badge */
         .update-badge {
             flex-shrink: 0;
             display: inline-flex; align-items: center; gap: .3rem;
@@ -157,106 +157,126 @@
             font-size: .6875rem; font-weight: 800;
             letter-spacing: .08em; text-transform: uppercase;
             color: #fbbf24;
+            line-height: 1;
         }
         .update-badge-dot {
             width: 6px; height: 6px; border-radius: 50%;
             background: #34d399;
             animation: badgePulse 1.8s ease infinite;
+            flex-shrink: 0;
         }
         @keyframes badgePulse {
             0%, 100% { opacity: 1; transform: scale(1); }
             50%       { opacity: .5; transform: scale(.75); }
         }
 
-        /* Main text */
+        /* ── FIXED: Text area takes remaining space, single row ── */
         .update-text {
             flex: 1; min-width: 0;
-            display: flex; align-items: center; gap: var(--spacing-lg);
-            flex-wrap: wrap;
+            display: flex; flex-direction: column; align-items: flex-start;
+            gap: 4px;
         }
         .update-headline {
             font-size: .875rem; font-weight: 700; color: white;
             white-space: nowrap;
         }
         .update-highlights {
-            display: flex; flex-wrap: wrap; gap: .375rem;
+            display: flex; flex-wrap: nowrap; gap: .375rem;
+            align-items: center; overflow: hidden;
+        }
+        @media (max-width: 900px) {
+            .update-highlights .update-chip:nth-child(n+3) { display: none; }
+        }
+        @media (max-width: 760px) {
+            .update-highlights { display: none; }
         }
         .update-chip {
             display: inline-flex; align-items: center; gap: .25rem;
-            padding: .175rem .625rem;
+            padding: .2rem .625rem;
             background: rgba(255,255,255,.1);
             border: 1px solid rgba(255,255,255,.15);
             border-radius: .375rem;
             font-size: .7rem; font-weight: 600; color: rgba(255,255,255,.85);
-            white-space: nowrap;
+            white-space: nowrap; line-height: 1.4;
         }
 
-        /* CTA */
-        .update-cta {
+        /* ── FIXED: CTA and dismiss always right-aligned ── */
+        .update-actions {
             flex-shrink: 0;
+            display: flex; align-items: center; gap: var(--spacing-sm);
+        }
+        .update-cta {
             display: inline-flex; align-items: center; gap: .375rem;
-            padding: .375rem 1rem;
+            padding: .4rem 1rem;
             background: #fbbf24; color: #1e3a8a;
             border-radius: .375rem; border: none;
             font-size: .8125rem; font-weight: 800;
             font-family: var(--font-primary);
             text-decoration: none; cursor: pointer;
             transition: all .18s ease;
-            white-space: nowrap;
+            white-space: nowrap; line-height: 1;
         }
         .update-cta:hover { background: #fde68a; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,.2); }
 
-        /* Dismiss */
         .update-dismiss {
-            flex-shrink: 0;
             width: 28px; height: 28px;
             background: rgba(255,255,255,.08);
             border: 1px solid rgba(255,255,255,.15);
             border-radius: .375rem;
             display: flex; align-items: center; justify-content: center;
             cursor: pointer; color: rgba(255,255,255,.6);
-            font-size: .875rem; transition: all .18s ease;
+            font-size: .75rem; transition: all .18s ease;
+            flex-shrink: 0;
         }
         .update-dismiss:hover { background: rgba(255,255,255,.18); color: white; }
 
-        /* ── HEADER ── */
+        /* ── FIXED: HEADER ── */
         .header {
             position: sticky; top: 0; z-index: 100;
-            padding: var(--spacing-lg) 0;
             background: var(--color-surface);
             border-bottom: 2px solid var(--color-primary);
             box-shadow: var(--shadow-sm);
-            backdrop-filter: blur(10px);
         }
-        .header .container { display: flex; justify-content: space-between; align-items: center; }
-        .logo { display: flex; align-items: center; gap: var(--spacing-lg); }
+        .header-inner {
+            max-width: 1100px; margin: 0 auto; padding: 0 var(--spacing-xl);
+            display: flex; justify-content: space-between; align-items: center;
+            height: 68px; /* fixed height for consistent alignment */
+        }
+        .logo { display: flex; align-items: center; gap: var(--spacing-md); }
         .logo-icon {
-            width: 52px; height: 52px;
+            width: 44px; height: 44px; flex-shrink: 0;
             background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
             border-radius: var(--radius-md);
             display: flex; align-items: center; justify-content: center;
             color: white; box-shadow: var(--shadow-md);
-            font-size: 1.25rem; font-weight: 800;
+            font-size: 1rem; font-weight: 800;
             font-family: var(--font-mono); letter-spacing: -0.05em;
         }
-        .logo-text { display: flex; flex-direction: column; line-height: 1.2; }
-        .logo-title { font-size: 1.375rem; font-weight: 700; color: var(--color-primary); letter-spacing: -0.025em; }
+        .logo-text { display: flex; flex-direction: column; line-height: 1.25; }
+        .logo-title { font-size: 1.25rem; font-weight: 700; color: var(--color-primary); letter-spacing: -0.025em; }
         [data-theme="dark"] .logo-title { color: var(--color-primary-light); }
-        .logo-subtitle { font-size: 0.8125rem; color: var(--color-text-secondary); font-weight: 500; }
-        .header-info { display: flex; align-items: center; gap: var(--spacing-md); }
+        .logo-subtitle { font-size: 0.75rem; color: var(--color-text-secondary); font-weight: 500; }
+
+        /* ── FIXED: Header right side perfectly centered ── */
+        .header-actions {
+            display: flex; align-items: center; gap: var(--spacing-sm);
+        }
         .badge {
-            padding: 0.375rem 0.875rem;
+            display: inline-flex; align-items: center;
+            padding: 0.25rem 0.75rem;
             background: var(--color-primary); color: white;
             border-radius: var(--radius-md);
             font-size: 0.75rem; font-weight: 600; letter-spacing: 0.025em;
-            box-shadow: var(--shadow-xs);
+            box-shadow: var(--shadow-xs); line-height: 1;
+            height: 28px;
         }
         .theme-toggle {
-            width: 40px; height: 40px;
+            width: 36px; height: 36px;
             border: 1px solid var(--color-border); background: var(--color-surface);
             border-radius: var(--radius-md);
             display: flex; align-items: center; justify-content: center;
-            cursor: pointer; transition: all var(--transition-base); font-size: 1.1rem;
+            cursor: pointer; transition: all var(--transition-base);
+            font-size: 1rem; flex-shrink: 0;
         }
         .theme-toggle:hover { background: var(--color-surface-alt); border-color: var(--color-primary); }
 
@@ -566,11 +586,10 @@
             .how-grid { grid-template-columns: 1fr; }
             .download-strip { flex-direction: column; align-items: flex-start; }
             .badge { display: none; }
-            /* Banner responsive */
             .update-badge { display: none; }
             .update-highlights { display: none; }
             .update-headline { font-size: .8125rem; white-space: normal; }
-            .update-banner-inner { min-height: 44px; gap: var(--spacing-md); }
+            .update-banner-inner { min-height: 44px; gap: var(--spacing-sm); }
         }
     </style>
 </head>
@@ -578,20 +597,14 @@
     <div class="bg-gradient"></div>
     <div class="bg-grid"></div>
 
-    <!-- ══════════════════════════════════════════════════════
-         UPDATE NOTIFICATION BANNER — v0.3.0
-         Ganti BANNER_VERSION setiap rilis baru untuk memicu
-         notif ulang ke user yang sudah dismiss sebelumnya.
-    ══════════════════════════════════════════════════════ -->
+    <!-- UPDATE NOTIFICATION BANNER -->
     <div class="update-banner" id="updateBanner">
         <div class="update-banner-inner">
-            <!-- Badge -->
             <div class="update-badge">
                 <div class="update-badge-dot"></div>
                 Baru
             </div>
 
-            <!-- Text + chips -->
             <div class="update-text">
                 <span class="update-headline">COUNTER EETA v0.3.0 tersedia!</span>
                 <div class="update-highlights">
@@ -602,19 +615,19 @@
                 </div>
             </div>
 
-            <!-- CTA -->
-            <a href="https://github.com/lkpdeetaprovinsibali-lab/COUNTER-EETA-LANDING/releases/tag/v0.3.0"
-               class="update-cta" target="_blank" rel="noopener noreferrer">
-                📥 Download
-            </a>
-
-            <!-- Dismiss -->
-            <button class="update-dismiss" onclick="dismissBanner()" title="Tutup notifikasi">✕</button>
+            <!-- Actions grouped together -->
+            <div class="update-actions">
+                <a href="https://github.com/lkpdeetaprovinsibali-lab/COUNTER-EETA-LANDING/releases/tag/v0.3.0"
+                   class="update-cta" target="_blank" rel="noopener noreferrer">
+                    📥 Download
+                </a>
+                <button class="update-dismiss" onclick="dismissBanner()" title="Tutup notifikasi">✕</button>
+            </div>
         </div>
     </div>
 
     <header class="header">
-        <div class="container-wide">
+        <div class="header-inner">
             <div class="logo">
                 <div class="logo-icon">CE</div>
                 <div class="logo-text">
@@ -622,7 +635,7 @@
                     <span class="logo-subtitle">Pemerintah Provinsi Bali</span>
                 </div>
             </div>
-            <div class="header-info">
+            <div class="header-actions">
                 <span class="badge">v0.3.0</span>
                 <button class="theme-toggle" onclick="toggleTheme()" title="Toggle tema">
                     <span id="themeIcon">🌙</span>
@@ -634,7 +647,7 @@
     <main class="main-content">
         <div class="container">
 
-            <!-- ── STATE 1: Cek awal ── -->
+            <!-- STATE 1: Cek awal -->
             <div class="state active" id="loadingState">
                 <div class="card">
                     <div class="card-inner">
@@ -647,7 +660,7 @@
                 </div>
             </div>
 
-            <!-- ── STATE 2: Menunggu app dibuka (30 detik) ── -->
+            <!-- STATE 2: Menunggu app dibuka (30 detik) -->
             <div class="state" id="waitingState">
                 <div class="card">
                     <div class="card-inner">
@@ -679,7 +692,7 @@
                 </div>
             </div>
 
-            <!-- ── STATE 3: Aplikasi terdeteksi ── -->
+            <!-- STATE 3: Aplikasi terdeteksi -->
             <div class="state" id="successState">
                 <div class="card">
                     <div class="card-inner">
@@ -698,7 +711,7 @@
                 </div>
             </div>
 
-            <!-- ── STATE 4: Aplikasi belum berjalan ── -->
+            <!-- STATE 4: Aplikasi belum berjalan -->
             <div class="state" id="notRunningState">
 
                 <div class="hero">
@@ -776,7 +789,7 @@
                     <div class="download-strip">
                         <div class="download-info">
                             <div class="download-title">Download COUNTER EETA v0.3.0</div>
-                            <div class="download-meta">~50 MB &nbsp;·&nbsp; Windows 10/11 &nbsp;·&nbsp; Tanggal Rilis Terbaru: 19 Februari 2026 - 01.45 WITA</div>
+                            <div class="download-meta">~50 MB &nbsp;·&nbsp; Windows 10/11 &nbsp;·&nbsp; Tanggal Rilis Terbaru: 19 Februari 2026</div>
                         </div>
                         <a href="https://github.com/lkpdeetaprovinsibali-lab/COUNTER-EETA-LANDING/releases"
                            class="btn-accent" target="_blank" rel="noopener noreferrer">
@@ -872,8 +885,6 @@
     <script>
     /* =========================================================
        UPDATE BANNER
-       Naikkan BANNER_VERSION setiap rilis baru agar banner
-       muncul lagi untuk user yang sudah dismiss sebelumnya.
     ========================================================= */
     const BANNER_VERSION = 'v0.3.0';
     const BANNER_KEY     = `ce_banner_dismissed_${BANNER_VERSION}`;
@@ -896,7 +907,6 @@
         setTimeout(() => { banner.classList.add('hidden'); }, 400);
     }
 
-    // Run on load
     initBanner();
 
     /* =========================================================
@@ -950,7 +960,7 @@
     }
 
     /* =========================================================
-       REDIRECT COUNTDOWN (success state)
+       REDIRECT COUNTDOWN
     ========================================================= */
     function startCountdown() {
         const numEl = document.getElementById('countdown');
@@ -986,7 +996,7 @@
     }
 
     /* =========================================================
-       WAITING STATE — 30 detik polling
+       WAITING STATE
     ========================================================= */
     function startWaiting() {
         waitSecsLeft = WAIT_DURATION;
@@ -1035,7 +1045,7 @@
     }
 
     /* =========================================================
-       HEARTBEAT (setelah app terdeteksi)
+       HEARTBEAT
     ========================================================= */
     function sendHeartbeat() {
         fetch(`${APP_URL}/heartbeat`, { method: 'POST', mode: 'no-cors' }).catch(() => {});
@@ -1064,4 +1074,3 @@
     </script>
 </body>
 </html>
-
