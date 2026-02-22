@@ -137,7 +137,6 @@
             to   { background-position: -200% center; }
         }
 
-        /* ── FIXED: Banner inner layout ── */
         .update-banner-inner {
             max-width: 1100px; margin: 0 auto;
             padding: 8px var(--spacing-xl);
@@ -170,7 +169,6 @@
             50%       { opacity: .5; transform: scale(.75); }
         }
 
-        /* ── FIXED: Text area takes remaining space, single row ── */
         .update-text {
             flex: 1; min-width: 0;
             display: flex; flex-direction: column; align-items: flex-start;
@@ -200,7 +198,6 @@
             white-space: nowrap; line-height: 1.4;
         }
 
-        /* ── FIXED: CTA and dismiss always right-aligned ── */
         .update-actions {
             flex-shrink: 0;
             display: flex; align-items: center; gap: var(--spacing-sm);
@@ -230,7 +227,7 @@
         }
         .update-dismiss:hover { background: rgba(255,255,255,.18); color: white; }
 
-        /* ── FIXED: HEADER ── */
+        /* ── HEADER ── */
         .header {
             position: sticky; top: 0; z-index: 100;
             background: var(--color-surface);
@@ -240,7 +237,7 @@
         .header-inner {
             max-width: 1100px; margin: 0 auto; padding: 0 var(--spacing-xl);
             display: flex; justify-content: space-between; align-items: center;
-            height: 68px; /* fixed height for consistent alignment */
+            height: 68px;
         }
         .logo { display: flex; align-items: center; gap: var(--spacing-md); }
         .logo-icon {
@@ -257,7 +254,6 @@
         [data-theme="dark"] .logo-title { color: var(--color-primary-light); }
         .logo-subtitle { font-size: 0.75rem; color: var(--color-text-secondary); font-weight: 500; }
 
-        /* ── FIXED: Header right side perfectly centered ── */
         .header-actions {
             display: flex; align-items: center; gap: var(--spacing-sm);
         }
@@ -270,6 +266,25 @@
             box-shadow: var(--shadow-xs); line-height: 1;
             height: 28px;
         }
+
+        /* ── FEEDBACK BUTTON IN HEADER ── */
+        .btn-feedback-header {
+            display: inline-flex; align-items: center; gap: .375rem;
+            padding: 0.375rem 0.875rem;
+            background: linear-gradient(135deg, #7c3aed, #9333ea);
+            color: white; border: none; border-radius: var(--radius-md);
+            font-size: 0.8rem; font-weight: 700; font-family: var(--font-primary);
+            cursor: pointer; text-decoration: none;
+            transition: all var(--transition-base);
+            box-shadow: 0 2px 8px rgba(124,58,237,.35);
+            height: 32px; white-space: nowrap;
+        }
+        .btn-feedback-header:hover {
+            background: linear-gradient(135deg, #6d28d9, #7c3aed);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 14px rgba(124,58,237,.45);
+        }
+
         .theme-toggle {
             width: 36px; height: 36px;
             border: 1px solid var(--color-border); background: var(--color-surface);
@@ -504,6 +519,85 @@
         }
         .btn-accent:hover { background: #b45309; transform: translateY(-2px); box-shadow: var(--shadow-md); }
 
+        /* ══════════════════════════════════════════════════════
+           FEEDBACK STRIP (inside card, above collapse)
+        ══════════════════════════════════════════════════════ */
+        .feedback-strip {
+            display: flex; align-items: center; justify-content: space-between;
+            gap: var(--spacing-lg); padding: var(--spacing-lg) var(--spacing-xl);
+            background: linear-gradient(135deg, rgba(124,58,237,.07), rgba(147,51,234,.04));
+            border: 1.5px solid rgba(124,58,237,.25);
+            border-radius: var(--radius-lg); margin-bottom: var(--spacing-xl);
+            position: relative; overflow: hidden;
+        }
+        .feedback-strip::before {
+            content: '';
+            position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
+            background: linear-gradient(180deg, #7c3aed, #9333ea);
+            border-radius: 4px 0 0 4px;
+        }
+        [data-theme="dark"] .feedback-strip {
+            background: linear-gradient(135deg, rgba(124,58,237,.12), rgba(147,51,234,.08));
+            border-color: rgba(124,58,237,.3);
+        }
+        .feedback-strip-text { flex: 1; min-width: 0; }
+        .feedback-strip-title {
+            font-size: 0.9375rem; font-weight: 700; color: var(--color-text);
+            margin-bottom: 2px; display: flex; align-items: center; gap: var(--spacing-sm);
+        }
+        .feedback-strip-desc { font-size: 0.8125rem; color: var(--color-text-muted); line-height: 1.5; }
+
+        .btn-feedback {
+            display: inline-flex; align-items: center; gap: .4rem;
+            padding: 0.625rem 1.25rem;
+            background: linear-gradient(135deg, #7c3aed, #9333ea);
+            color: white; border: none; border-radius: var(--radius-lg);
+            font-size: 0.875rem; font-weight: 700; font-family: var(--font-primary);
+            cursor: pointer; text-decoration: none; white-space: nowrap; flex-shrink: 0;
+            box-shadow: 0 2px 12px rgba(124,58,237,.35);
+            transition: all var(--transition-base);
+        }
+        .btn-feedback:hover {
+            background: linear-gradient(135deg, #6d28d9, #7c3aed);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(124,58,237,.45);
+        }
+        .btn-feedback:active { transform: translateY(0); }
+
+        /* ══════════════════════════════════════════════════════
+           FLOATING FEEDBACK BUTTON
+        ══════════════════════════════════════════════════════ */
+        .fab-feedback {
+            position: fixed; bottom: 28px; right: 28px; z-index: 300;
+            display: flex; align-items: center; gap: .5rem;
+            padding: .75rem 1.375rem;
+            background: linear-gradient(135deg, #7c3aed, #9333ea);
+            color: white; border: none; border-radius: 2rem;
+            font-size: .9375rem; font-weight: 700; font-family: var(--font-primary);
+            cursor: pointer; text-decoration: none;
+            box-shadow: 0 4px 24px rgba(124,58,237,.45), 0 1px 4px rgba(0,0,0,.15);
+            transition: all .2s cubic-bezier(.34,1.56,.64,1);
+            animation: fabIn .5s cubic-bezier(.34,1.56,.64,1) .6s both;
+        }
+        .fab-feedback:hover {
+            background: linear-gradient(135deg, #6d28d9, #7c3aed);
+            transform: translateY(-3px) scale(1.04);
+            box-shadow: 0 8px 30px rgba(124,58,237,.55), 0 2px 8px rgba(0,0,0,.2);
+        }
+        .fab-feedback:active { transform: translateY(0) scale(.97); }
+        .fab-pulse {
+            width: 10px; height: 10px; background: #34d399; border-radius: 50%;
+            animation: fabPulse 2s ease infinite; flex-shrink: 0;
+        }
+        @keyframes fabPulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50%       { transform: scale(.6); opacity: .6; }
+        }
+        @keyframes fabIn {
+            from { transform: translateY(20px) scale(.8); opacity: 0; }
+            to   { transform: translateY(0) scale(1);    opacity: 1; }
+        }
+
         .collapse-trigger {
             display: flex; align-items: center; justify-content: space-between; padding: var(--spacing-lg);
             background: var(--color-surface-alt); border: 1px solid var(--color-border);
@@ -570,6 +664,24 @@
         .footer-info p { margin: var(--spacing-xs) 0; }
         .footer-note { font-style: italic; opacity: .8; }
 
+        /* ── FOOTER FEEDBACK LINK ── */
+        .footer-feedback {
+            display: inline-flex; align-items: center; gap: .4rem;
+            padding: .5rem 1.125rem;
+            background: linear-gradient(135deg, rgba(124,58,237,.1), rgba(147,51,234,.07));
+            border: 1px solid rgba(124,58,237,.25);
+            border-radius: 2rem;
+            font-size: 0.8125rem; font-weight: 600;
+            color: #7c3aed; text-decoration: none;
+            transition: all var(--transition-base);
+        }
+        .footer-feedback:hover {
+            background: linear-gradient(135deg, rgba(124,58,237,.18), rgba(147,51,234,.12));
+            border-color: rgba(124,58,237,.45);
+            transform: translateY(-1px);
+        }
+        [data-theme="dark"] .footer-feedback { color: #a78bfa; border-color: rgba(167,139,250,.3); }
+
         /* ===== ANIMATIONS ===== */
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes scaleIn  { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
@@ -590,6 +702,9 @@
             .update-highlights { display: none; }
             .update-headline { font-size: .8125rem; white-space: normal; }
             .update-banner-inner { min-height: 44px; gap: var(--spacing-sm); }
+            .btn-feedback-header { display: none; }
+            .feedback-strip { flex-direction: column; align-items: flex-start; }
+            .fab-feedback { bottom: 16px; right: 16px; padding: .65rem 1.1rem; font-size: .875rem; }
         }
     </style>
 </head>
@@ -604,7 +719,6 @@
                 <div class="update-badge-dot"></div>
                 Baru
             </div>
-
             <div class="update-text">
                 <span class="update-headline">COUNTER EETA v0.3.0 tersedia!</span>
                 <div class="update-highlights">
@@ -614,8 +728,6 @@
                     <span class="update-chip">🔧 4 bug fix stabilitas</span>
                 </div>
             </div>
-
-            <!-- Actions grouped together -->
             <div class="update-actions">
                 <a href="https://github.com/lkpdeetaprovinsibali-lab/COUNTER-EETA-LANDING/releases/tag/beta_3"
                    class="update-cta" target="_blank" rel="noopener noreferrer">
@@ -637,12 +749,24 @@
             </div>
             <div class="header-actions">
                 <span class="badge">v0.3.0</span>
+                <!-- FEEDBACK BUTTON IN HEADER -->
+                <a href="https://forms.gle/i829iegQqeDntxA67" target="_blank" rel="noopener noreferrer"
+                   class="btn-feedback-header">
+                    💬 Aduan &amp; Saran
+                </a>
                 <button class="theme-toggle" onclick="toggleTheme()" title="Toggle tema">
                     <span id="themeIcon">🌙</span>
                 </button>
             </div>
         </div>
     </header>
+
+    <!-- FLOATING ACTION BUTTON -->
+    <a href="https://forms.gle/i829iegQqeDntxA67" target="_blank" rel="noopener noreferrer"
+       class="fab-feedback" title="Sampaikan aduan atau saran Anda">
+        <div class="fab-pulse"></div>
+        💬 Aduan &amp; Saran
+    </a>
 
     <main class="main-content">
         <div class="container">
@@ -687,7 +811,7 @@
                                 <div class="wait-bar-fill" id="waitBarFill"></div>
                             </div>
                         </div>
-                        <button class="wait-cancel" onclick="cancelWaiting()">Batalkan & kembali</button>
+                        <button class="wait-cancel" onclick="cancelWaiting()">Batalkan &amp; kembali</button>
                     </div>
                 </div>
             </div>
@@ -720,7 +844,7 @@
                     </div>
                     <h1 class="hero-title">
                         <span class="title-main">Analisis Laporan Keuangan</span>
-                        <span class="title-accent">Otomatis & Profesional</span>
+                        <span class="title-accent">Otomatis &amp; Profesional</span>
                     </h1>
                     <p class="hero-desc">
                         Platform pengolah LKPD berbasis CALK — dari pivot otomatis,
@@ -773,7 +897,7 @@
                         <div class="feat">
                             <div class="feat-icon">🔒</div>
                             <div>
-                                <div class="feat-title">Data Lokal & Aman</div>
+                                <div class="feat-title">Data Lokal &amp; Aman</div>
                                 <div class="feat-desc">Semua diproses di komputer secara lokal, tidak ada melalui internet</div>
                             </div>
                         </div>
@@ -794,6 +918,23 @@
                         <a href="https://github.com/lkpdeetaprovinsibali-lab/COUNTER-EETA-LANDING/releases"
                            class="btn-accent" target="_blank" rel="noopener noreferrer">
                             📥 &nbsp;Download
+                        </a>
+                    </div>
+
+                    <!-- ══ FEEDBACK STRIP ══ -->
+                    <div class="feedback-strip">
+                        <div class="feedback-strip-text">
+                            <div class="feedback-strip-title">
+                                💬 Ada Kendala atau Masukan?
+                            </div>
+                            <div class="feedback-strip-desc">
+                                Temukan bug, punya ide fitur baru, atau ingin menyampaikan saran?
+                                Kami sangat terbuka — laporan Anda membantu kami berkembang lebih baik.
+                            </div>
+                        </div>
+                        <a href="https://forms.gle/i829iegQqeDntxA67" target="_blank" rel="noopener noreferrer"
+                           class="btn-feedback">
+                            ✍️ Isi Form Aduan &amp; Saran
                         </a>
                     </div>
 
@@ -878,6 +1019,11 @@
                     <p>Dikembangkan oleh Tim Inovasi &mdash; Pemerintah Provinsi Bali</p>
                     <p class="footer-note">Untuk keperluan internal penyusunan LKPD. Data bersifat rahasia.</p>
                 </div>
+                <!-- FEEDBACK LINK IN FOOTER -->
+                <a href="https://forms.gle/i829iegQqeDntxA67" target="_blank" rel="noopener noreferrer"
+                   class="footer-feedback">
+                    💬 Sampaikan Aduan &amp; Saran
+                </a>
             </div>
         </div>
     </footer>
@@ -1074,4 +1220,3 @@
     </script>
 </body>
 </html>
-
